@@ -4,6 +4,7 @@ import "./globals.css";
 import React from "react";
 import { APP } from "@/lib/constants";
 import { ThemeProvider, ThemeScript } from "@/components/ThemeProvider";
+import { NavigationLoadingProvider } from "@/components/NavigationLoadingProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,11 @@ export default function RootLayout({
         <ThemeScript />
       </head>
       <body className={inter.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <NavigationLoadingProvider>
+            {children}
+          </NavigationLoadingProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
