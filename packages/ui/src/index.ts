@@ -12,4 +12,6 @@ export {
 
 export { Input } from "./components/input";
 
+export { ThemeToggle, ThemeToggleExpanded } from "./components/theme-toggle";
+
 export { cn } from "./lib/utils";

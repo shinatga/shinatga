@@ -8,9 +8,12 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <div className="max-w-5xl w-full text-center space-y-8">
-        <h1 className="text-6xl font-bold tracking-tight">
-          {hero.title}
-        </h1>
+        <div className="flex items-center justify-center gap-4">
+          <hero.icon className="h-16 w-16" />
+          <h1 className="text-6xl font-bold tracking-tight">
+            {hero.title}
+          </h1>
+        </div>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           {hero.description}
           <br />
@@ -29,15 +32,31 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-          {features.map((feature) => (
-            <div key={feature.title} className="p-6 border rounded-lg w-full h-screen">
-              <div className="text-4xl mb-4">{feature.emoji}</div>
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+          {features.map((feature) => {
+            const hasIcon = "icon" in feature;
+            const IconComponent = hasIcon ? feature.icon : null;
+
+            return (
+              <div
+                key={feature.title}
+                className="p-6 border rounded-lg w-full h-screen"
+              >
+                <div className="mb-4">
+                  {IconComponent ? (
+                    <IconComponent className="h-12 w-12" />
+                  ) : (
+                    <span className="text-4xl">
+                      {"emoji" in feature ? feature.emoji : ""}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </main>

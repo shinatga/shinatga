@@ -1,8 +1,11 @@
+import { Sprout, BookOpen } from "lucide-react";
+
 // 페이지별 텍스트 상수
 export const PAGES = {
   home: {
     hero: {
-      title: "시냇가 🌿",
+      title: "시냇가",
+      icon: Sprout,
       description: "노트, 제목을 체계적으로 관리하는",
       subtitle: "템플릿 기반 노트 앱",
     },
@@ -12,7 +15,7 @@ export const PAGES = {
     },
     features: [
       {
-        emoji: "📖",
+        icon: BookOpen,
         title: "예배 말씀",
         description: "설교 제목, 본문, 적용점을 구조화하여 기록",
       },
