@@ -1,0 +1,70 @@
+import { Template } from "../types";
+
+export const meditationTemplate: Template = {
+  name: "묵상 노트",
+  description: "성경 묵상이나 QT 내용을 기록합니다",
+  type: "meditation",
+  icon: "✝️",
+  color: "#10B981",
+  isDefault: true,
+  isPublic: true,
+  fields: [
+    {
+      id: "meditation-date",
+      label: "묵상 날짜",
+      type: "date",
+      required: true,
+    },
+    {
+      id: "meditation-scripture",
+      label: "본문 말씀",
+      type: "scripture",
+      required: true,
+      placeholder: "예) 시편 23:1-6",
+    },
+    {
+      id: "meditation-passage",
+      label: "말씀 전문",
+      type: "rich-text",
+      placeholder: "본문 말씀을 직접 필사해보세요",
+      description: "말씀을 손으로 쓰면서 더 깊이 묵상할 수 있습니다",
+    },
+    {
+      id: "meditation-observation",
+      label: "관찰 (Observation)",
+      type: "rich-text",
+      required: true,
+      placeholder: "본문에서 발견한 것들을 기록하세요",
+      description: "누가, 무엇을, 언제, 어디서, 왜, 어떻게",
+    },
+    {
+      id: "meditation-interpretation",
+      label: "해석 (Interpretation)",
+      type: "rich-text",
+      required: true,
+      placeholder: "본문이 의미하는 바는 무엇인가요?",
+      description: "원래의 청중에게 어떤 의미였을까요?",
+    },
+    {
+      id: "meditation-application",
+      label: "적용 (Application)",
+      type: "rich-text",
+      required: true,
+      placeholder: "오늘 내 삶에 어떻게 적용할까요?",
+      description: "구체적이고 실천 가능한 적용점",
+    },
+    {
+      id: "meditation-prayer",
+      label: "기도 (Prayer)",
+      type: "rich-text",
+      required: true,
+      placeholder: "말씀을 통해 드리는 기도",
+    },
+    {
+      id: "meditation-share",
+      label: "나눔 포인트",
+      type: "textarea",
+      placeholder: "다른 사람들과 나누고 싶은 내용",
+    },
+  ],
+};

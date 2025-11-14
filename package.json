@@ -1,0 +1,34 @@
+{
+  "name": "shinatga",
+  "version": "0.1.0",
+  "private": true,
+  "description": "템플릿 기반 노트 앱 - 시냇가",
+  "keywords": [
+    "notes",
+    "templates",
+    "bible",
+    "meditation",
+    "prayer"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "type-check": "turbo run type-check",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
+    "db:studio": "turbo run db:studio"
+  },
+  "devDependencies": {
+    "@turbo/gen": "^2.3.3",
+    "prettier": "^3.3.3",
+    "turbo": "^2.3.3"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

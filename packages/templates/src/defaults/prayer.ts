@@ -1,0 +1,86 @@
+import { Template } from "../types";
+
+export const prayerTemplate: Template = {
+  name: "기도 제목",
+  description: "기도 제목과 응답을 기록하고 관리합니다",
+  type: "prayer",
+  icon: "🙏",
+  color: "#8B5CF6",
+  isDefault: true,
+  isPublic: true,
+  fields: [
+    {
+      id: "prayer-title",
+      label: "기도 제목",
+      type: "text",
+      required: true,
+      placeholder: "간단한 기도 제목",
+    },
+    {
+      id: "prayer-category",
+      label: "분류",
+      type: "select",
+      options: [
+        "개인",
+        "가족",
+        "교회",
+        "선교",
+        "국가/사회",
+        "감사",
+        "회개",
+        "간구",
+      ],
+      defaultValue: "개인",
+    },
+    {
+      id: "prayer-date-start",
+      label: "시작일",
+      type: "date",
+      required: true,
+    },
+    {
+      id: "prayer-scripture",
+      label: "관련 말씀",
+      type: "scripture",
+      placeholder: "기도와 관련된 성경 구절",
+    },
+    {
+      id: "prayer-details",
+      label: "기도 내용",
+      type: "rich-text",
+      required: true,
+      placeholder: "구체적인 기도 내용을 자세히 적어보세요",
+    },
+    {
+      id: "prayer-frequency",
+      label: "기도 빈도",
+      type: "select",
+      options: ["매일", "매주", "수시로", "한 번"],
+      defaultValue: "매일",
+    },
+    {
+      id: "prayer-answered",
+      label: "응답 여부",
+      type: "select",
+      options: ["기도 중", "응답됨", "다르게 응답됨", "보류"],
+      defaultValue: "기도 중",
+    },
+    {
+      id: "prayer-answer-date",
+      label: "응답 날짜",
+      type: "date",
+    },
+    {
+      id: "prayer-answer-details",
+      label: "응답 내용",
+      type: "rich-text",
+      placeholder: "하나님께서 어떻게 응답하셨나요?",
+    },
+    {
+      id: "prayer-reflection",
+      label: "묵상",
+      type: "textarea",
+      placeholder: "기도 과정에서 깨달은 점이나 느낀 점",
+    },
+  ],
+};
