@@ -11,6 +11,7 @@ export default function DashboardLayout({
       <Lnb />
 
       {/* Main Content */}
+      
       <main className="flex-1 overflow-y-auto pl-6">{children}</main>
     </div>
   );
