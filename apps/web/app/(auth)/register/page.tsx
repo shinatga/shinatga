@@ -1,20 +1,23 @@
 import { Button } from "@shinatga/ui";
 import Link from "next/link";
+import { PAGES, ROUTES } from "@/lib/constants";
 
 export default function RegisterPage() {
+  const { register } = PAGES.auth;
+
   return (
     <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-md space-y-8 p-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold">계정 만들기</h2>
+          <h2 className="text-3xl font-bold">{register.title}</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            시냇가와 함께 묵상을 시작하세요
+            {register.subtitle}
           </p>
         </div>
 
         <div className="mt-8 space-y-4">
           <Button className="w-full" size="lg">
-            이메일로 가입하기
+            {register.button}
           </Button>
 
           <div className="relative">
@@ -23,15 +26,15 @@ export default function RegisterPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background px-2 text-muted-foreground">
-                또는
+                {register.divider}
               </span>
             </div>
           </div>
 
           <p className="text-center text-sm">
-            이미 계정이 있으신가요?{" "}
-            <Link href="/login" className="text-primary hover:underline">
-              로그인
+            {register.hasAccount}{" "}
+            <Link href={ROUTES.login} className="text-primary hover:underline">
+              {register.loginLink}
             </Link>
           </p>
         </div>

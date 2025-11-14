@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { APP, NAVIGATION } from "@/lib/constants";
 
 export default function DashboardLayout({
   children,
@@ -10,28 +11,19 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <aside className="w-64 border-r bg-card">
         <div className="p-6">
-          <h1 className="text-2xl font-bold">시냇가 🌿</h1>
+          <h1 className="text-2xl font-bold">{APP.name} {APP.emoji}</h1>
         </div>
 
         <nav className="space-y-1 px-3">
-          <Link
-            href="/notes"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent"
-          >
-            📝 노트
-          </Link>
-          <Link
-            href="/templates"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent"
-          >
-            📋 템플릿
-          </Link>
-          <Link
-            href="/settings"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent"
-          >
-            ⚙️ 설정
-          </Link>
+          {NAVIGATION.sidebar.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-accent"
+            >
+              {item.icon} {item.label}
+            </Link>
+          ))}
         </nav>
       </aside>
 

@@ -1,15 +1,18 @@
 import { Button, Card, CardHeader, CardTitle, CardDescription } from "@shinatga/ui";
 import { defaultTemplates } from "@shinatga/templates";
+import { PAGES } from "@/lib/constants";
 
 export default function NotesPage() {
+  const { notes } = PAGES;
+
   return (
     <div className="container py-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">노트</h1>
-          <p className="text-muted-foreground">나의 묵상과 기도를 기록하세요</p>
+          <h1 className="text-3xl font-bold">{notes.title}</h1>
+          <p className="text-muted-foreground">{notes.subtitle}</p>
         </div>
-        <Button>새 노트 작성</Button>
+        <Button>{notes.newNote}</Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -25,8 +28,8 @@ export default function NotesPage() {
       </div>
 
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">최근 노트</h2>
-        <p className="text-muted-foreground">아직 작성된 노트가 없습니다.</p>
+        <h2 className="text-xl font-semibold mb-4">{notes.recentNotes}</h2>
+        <p className="text-muted-foreground">{notes.empty}</p>
       </div>
     </div>
   );
