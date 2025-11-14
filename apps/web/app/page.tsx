@@ -39,7 +39,7 @@ export default function HomePage() {
             return (
               <div
                 key={feature.title}
-                className="p-6 border rounded-lg w-full h-screen"
+                className="p-6 border rounded-lg"
               >
                 <div className="mb-4">
                   {IconComponent ? (
