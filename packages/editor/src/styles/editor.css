@@ -1,0 +1,193 @@
+/* Tiptap Editor Styles */
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Highlight colors */
+.ProseMirror mark {
+  background-color: #fef08a;
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.ProseMirror mark[data-color="#fef08a"] {
+  background-color: #fef08a;
+}
+
+.ProseMirror mark[data-color="#fca5a5"] {
+  background-color: #fca5a5;
+}
+
+.ProseMirror mark[data-color="#86efac"] {
+  background-color: #86efac;
+}
+
+.ProseMirror mark[data-color="#93c5fd"] {
+  background-color: #93c5fd;
+}
+
+/* Link styles */
+.ProseMirror a {
+  color: #2563eb;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.ProseMirror a:hover {
+  color: #1d4ed8;
+}
+
+/* Heading styles */
+.ProseMirror h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+.ProseMirror h3 {
+  font-size: 1.25em;
+  font-weight: bold;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.4;
+}
+
+/* List styles */
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}
+
+.ProseMirror ul {
+  list-style-type: disc;
+}
+
+.ProseMirror ol {
+  list-style-type: decimal;
+}
+
+.ProseMirror li {
+  margin: 0.25em 0;
+}
+
+/* Code styles */
+.ProseMirror code {
+  background-color: #f3f4f6;
+  border-radius: 0.25em;
+  padding: 0.125em 0.25em;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+
+.ProseMirror pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.5em;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.ProseMirror pre code {
+  background-color: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* Blockquote styles */
+.ProseMirror blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Horizontal rule */
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid #e5e7eb;
+  margin: 2em 0;
+}
+
+/* Custom Bible Verse styles */
+.ProseMirror div[data-type="bible-verse"] {
+  background-color: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 0.25em;
+}
+
+.ProseMirror div[data-type="bible-verse"]::before {
+  content: "📖 " attr(data-reference);
+  display: block;
+  font-weight: bold;
+  color: #92400e;
+  margin-bottom: 0.5em;
+}
+
+/* Custom Template Field styles */
+.ProseMirror div[data-type="template-field"] {
+  background-color: #e0f2fe;
+  border: 2px dashed #0284c7;
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 0.25em;
+  position: relative;
+}
+
+.ProseMirror div[data-type="template-field"]::before {
+  content: "📝 " attr(data-label);
+  display: block;
+  font-weight: bold;
+  color: #075985;
+  margin-bottom: 0.5em;
+  font-size: 0.875em;
+}
+
+/* Selection styles */
+.ProseMirror ::selection {
+  background-color: #bfdbfe;
+}
+
+/* Focus styles */
+.ProseMirror:focus {
+  outline: none;
+}
+
+/* Drag and drop placeholder */
+.ProseMirror .ProseMirror-gapcursor {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+}
+
+.ProseMirror .ProseMirror-gapcursor::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 1px solid black;
+  animation: ProseMirror-cursor-blink 1.1s steps(2, start) infinite;
+}
+

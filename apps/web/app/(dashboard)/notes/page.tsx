@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button, Card, CardHeader, CardTitle, CardDescription } from "@shinatga/ui";
 import { defaultTemplates } from "@shinatga/templates";
 import { PAGES } from "@/lib/constants";
@@ -12,7 +13,9 @@ export default function NotesPage() {
           <h1 className="text-3xl font-bold">{notes.title}</h1>
           <p className="text-muted-foreground">{notes.subtitle}</p>
         </div>
-        <Button>{notes.newNote}</Button>
+        <Link href="/notes/new">
+          <Button>{notes.newNote}</Button>
+        </Link>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

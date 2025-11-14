@@ -9,6 +9,8 @@ import Underline from "@tiptap/extension-underline";
 
 import { BibleVerse } from "../extensions/bible-verse";
 import { TemplateField } from "../extensions/template-field";
+import { MenuBar } from "./menu-bar";
+import "../styles/editor.css";
 
 export interface TipTapEditorProps {
   content?: string;
@@ -16,6 +18,7 @@ export interface TipTapEditorProps {
   editable?: boolean;
   onUpdate?: (editor: Editor) => void;
   className?: string;
+  showMenuBar?: boolean;
 }
 
 export function TipTapEditor({
@@ -24,6 +27,7 @@ export function TipTapEditor({
   editable = true,
   onUpdate,
   className = "",
+  showMenuBar = true,
 }: TipTapEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -64,8 +68,11 @@ export function TipTapEditor({
   });
 
   return (
-    <div className={className}>
-      <EditorContent editor={editor} />
+    <div className={`border border-gray-300 rounded-lg overflow-hidden ${className}`}>
+      {showMenuBar && editable && <MenuBar editor={editor} />}
+      <div className="bg-white">
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }
