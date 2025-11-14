@@ -1,18 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TipTapEditor, type Editor } from "@shinatga/editor";
 import { Button } from "@shinatga/ui";
 import { useRouter } from "next/navigation";
+import { createNote } from "@/lib/api";
+import { getTemplates } from "@/lib/api";
+import type { Template } from "@shinatga/database";
 
 export default function NewNotePage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [editor, setEditor] = useState<Editor | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
 
-  const handleEditorUpdate = (editor: Editor) => {
-    setContent(editor.getHTML());
+  useEffect(() => {
+    // 템플릿 목록 로드 (백그라운드)
+    const loadTemplates = async () => {
+      try {
+        const data = await getTemplates({ isDefault: true });
+        setTemplates(data);
+        // 기본적으로 템플릿 없이 시작 (자유 작성)
+        setSelectedTemplateId("");
+      } catch (error) {
+        console.error("템플릿 로드 실패:", error);
+        // 템플릿 로드 실패해도 자유 작성은 가능
+      }
+    };
+
+    loadTemplates();
+  }, []);
+
+  const handleEditorUpdate = (editorInstance: Editor) => {
+    setEditor(editorInstance);
+    setContent(editorInstance.getHTML());
   };
 
   const handleSave = async () => {
@@ -22,14 +46,31 @@ export default function NewNotePage() {
     }
 
     setIsSaving(true);
-    // TODO: 실제 저장 로직 구현
-    console.log("Saving note:", { title, content });
     
-    // 임시: 2초 후 목록으로 이동
-    setTimeout(() => {
-      setIsSaving(false);
+    try {
+      // TipTap JSON 콘텐츠 가져오기
+      const jsonContent = editor?.getJSON() || { type: "doc", content: [] };
+      
+      const noteData: any = {
+        title,
+        content: jsonContent,
+      };
+
+      // 템플릿이 선택된 경우에만 포함
+      if (selectedTemplateId) {
+        noteData.templateId = selectedTemplateId;
+      }
+      
+      await createNote(noteData);
+
+      alert("노트가 저장되었습니다!");
       router.push("/notes");
-    }, 2000);
+    } catch (error) {
+      console.error("노트 저장 실패:", error);
+      alert(error instanceof Error ? error.message : "노트 저장에 실패했습니다.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleCancel = () => {
@@ -37,6 +78,8 @@ export default function NewNotePage() {
       router.push("/notes");
     }
   };
+
+  // 템플릿 로딩은 백그라운드에서 진행, 사용자는 바로 작성 가능
 
   return (
     <div className="container py-8 max-w-5xl mx-auto">
@@ -54,6 +97,26 @@ export default function NewNotePage() {
 
       <div className="space-y-4">
         <div>
+          <label htmlFor="template" className="block text-sm font-medium mb-2">
+            템플릿 <span className="text-muted-foreground text-xs">(선택사항)</span>
+          </label>
+          <select
+            id="template"
+            value={selectedTemplateId}
+            onChange={(e) => setSelectedTemplateId(e.target.value)}
+            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+            disabled={isSaving}
+          >
+            <option value="">템플릿 없이 자유롭게 작성</option>
+            {templates.map((template) => (
+              <option key={template.id} value={template.id}>
+                {template.icon} {template.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
           <label htmlFor="title" className="block text-sm font-medium mb-2">
             제목
           </label>
@@ -64,6 +127,7 @@ export default function NewNotePage() {
             onChange={(e) => setTitle(e.target.value)}
             placeholder="노트 제목을 입력하세요"
             className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+            disabled={isSaving}
           />
         </div>
 

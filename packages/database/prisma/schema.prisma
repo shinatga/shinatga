@@ -107,8 +107,8 @@ model Note {
   title       String
   content     Json     // TipTap JSON content
 
-  templateId  String
-  template    Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  templateId  String?
+  template    Template? @relation(fields: [templateId], references: [id], onDelete: SetNull)
 
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
