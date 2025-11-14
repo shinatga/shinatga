@@ -4,7 +4,7 @@
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
-  color: #adb5bd;
+  color: hsl(var(--muted-foreground));
   content: attr(data-placeholder);
   float: left;
   height: 0;
@@ -13,36 +13,39 @@
 
 /* Highlight colors */
 .ProseMirror mark {
-  background-color: #fef08a;
+  background-color: hsl(var(--editor-highlight-yellow));
   border-radius: 2px;
   padding: 0 2px;
+  color: hsl(var(--foreground));
 }
 
-.ProseMirror mark[data-color="#fef08a"] {
-  background-color: #fef08a;
+/* Specific highlight colors (for backward compatibility) */
+.ProseMirror mark[data-color="#A17D12"],
+.ProseMirror mark[data-color="#A17D12"] {
+  background-color: hsl(var(--editor-highlight-yellow));
 }
 
 .ProseMirror mark[data-color="#fca5a5"] {
-  background-color: #fca5a5;
+  background-color: hsl(var(--editor-highlight-red));
 }
 
 .ProseMirror mark[data-color="#86efac"] {
-  background-color: #86efac;
+  background-color: hsl(var(--editor-highlight-green));
 }
 
 .ProseMirror mark[data-color="#93c5fd"] {
-  background-color: #93c5fd;
+  background-color: hsl(var(--editor-highlight-blue));
 }
 
 /* Link styles */
 .ProseMirror a {
-  color: #2563eb;
+  color: hsl(var(--primary));
   text-decoration: underline;
   cursor: pointer;
 }
 
 .ProseMirror a:hover {
-  color: #1d4ed8;
+  opacity: 0.8;
 }
 
 /* Heading styles */
@@ -91,7 +94,7 @@
 
 /* Code styles */
 .ProseMirror code {
-  background-color: #f3f4f6;
+  background-color: hsl(var(--muted));
   border-radius: 0.25em;
   padding: 0.125em 0.25em;
   font-family: 'Courier New', Courier, monospace;
@@ -99,8 +102,8 @@
 }
 
 .ProseMirror pre {
-  background-color: #1f2937;
-  color: #f9fafb;
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
   border-radius: 0.5em;
   padding: 1em;
   overflow-x: auto;
@@ -114,24 +117,24 @@
 
 /* Blockquote styles */
 .ProseMirror blockquote {
-  border-left: 4px solid #e5e7eb;
+  border-left: 4px solid hsl(var(--border));
   padding-left: 1em;
   margin: 1em 0;
-  color: #6b7280;
+  color: hsl(var(--muted-foreground));
   font-style: italic;
 }
 
 /* Horizontal rule */
 .ProseMirror hr {
   border: none;
-  border-top: 2px solid #e5e7eb;
+  border-top: 2px solid hsl(var(--border));
   margin: 2em 0;
 }
 
 /* Custom Bible Verse styles */
 .ProseMirror div[data-type="bible-verse"] {
-  background-color: #fef3c7;
-  border-left: 4px solid #f59e0b;
+  background-color: hsl(var(--editor-bible-bg));
+  border-left: 4px solid hsl(var(--editor-bible-border));
   padding: 1em;
   margin: 1em 0;
   border-radius: 0.25em;
@@ -141,14 +144,14 @@
   content: "📖 " attr(data-reference);
   display: block;
   font-weight: bold;
-  color: #92400e;
+  color: hsl(var(--editor-bible-text));
   margin-bottom: 0.5em;
 }
 
 /* Custom Template Field styles */
 .ProseMirror div[data-type="template-field"] {
-  background-color: #e0f2fe;
-  border: 2px dashed #0284c7;
+  background-color: hsl(var(--editor-template-bg));
+  border: 2px dashed hsl(var(--editor-template-border));
   padding: 1em;
   margin: 1em 0;
   border-radius: 0.25em;
@@ -159,14 +162,14 @@
   content: "📝 " attr(data-label);
   display: block;
   font-weight: bold;
-  color: #075985;
+  color: hsl(var(--editor-template-text));
   margin-bottom: 0.5em;
   font-size: 0.875em;
 }
 
 /* Selection styles */
 .ProseMirror ::selection {
-  background-color: #bfdbfe;
+  background-color: hsl(var(--accent));
 }
 
 /* Focus styles */

@@ -68,9 +68,9 @@ export function TipTapEditor({
   });
 
   return (
-    <div className={`border border-gray-300 rounded-lg overflow-hidden ${className}`}>
+    <div className={`border border-border rounded-lg overflow-hidden ${className}`}>
       {showMenuBar && editable && <MenuBar editor={editor} />}
-      <div className="bg-white">
+      <div className="bg-card">
         <EditorContent editor={editor} />
       </div>
     </div>

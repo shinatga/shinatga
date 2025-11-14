@@ -30,6 +30,20 @@
     --ring: 221.2 83.2% 53.3%;
 
     --radius: 0.5rem;
+
+    /* Custom editor colors */
+    --editor-bible-bg: 45 93% 89%;
+    --editor-bible-border: 38 92% 50%;
+    --editor-bible-text: 30 81% 28%;
+    --editor-template-bg: 199 95% 94%;
+    --editor-template-border: 199 89% 48%;
+    --editor-template-text: 199 98% 26%;
+    
+    /* Highlight colors for light mode */
+    --editor-highlight-yellow: 54 91% 76%;
+    --editor-highlight-red: 0 93% 80%;
+    --editor-highlight-green: 142 76% 73%;
+    --editor-highlight-blue: 213 94% 78%;
   }
 
   .dark {
@@ -57,6 +71,20 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+
+    /* Custom editor colors for dark mode */
+    --editor-bible-bg: 38 50% 20%;
+    --editor-bible-border: 38 92% 50%;
+    --editor-bible-text: 45 93% 80%;
+    --editor-template-bg: 199 50% 20%;
+    --editor-template-border: 199 89% 48%;
+    --editor-template-text: 199 95% 80%;
+    
+    /* Highlight colors for dark mode - darker, more saturated for visibility */
+    --editor-highlight-yellow: 45 80% 35%;
+    --editor-highlight-red: 0 70% 35%;
+    --editor-highlight-green: 142 50% 35%;
+    --editor-highlight-blue: 213 60% 35%;
   }
 }
 

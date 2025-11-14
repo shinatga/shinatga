@@ -11,13 +11,13 @@ export function MenuBar({ editor }: MenuBarProps) {
     return null;
   }
 
-  const buttonClass = "p-2 rounded hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
-  const activeClass = "bg-gray-200 hover:bg-gray-300";
+  const buttonClass = "p-2 rounded hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
+  const activeClass = "bg-accent hover:bg-accent/80";
 
   return (
-    <div className="border-b border-gray-200 p-2 flex flex-wrap gap-1 bg-white sticky top-0 z-10">
+    <div className="border-b border-border p-2 flex flex-wrap gap-1 bg-card sticky top-0 z-10">
       {/* Text Formatting */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -53,7 +53,7 @@ export function MenuBar({ editor }: MenuBarProps) {
       </div>
 
       {/* Headings */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={`${buttonClass} ${editor.isActive("heading", { level: 1 }) ? activeClass : ""}`}
@@ -78,7 +78,7 @@ export function MenuBar({ editor }: MenuBarProps) {
       </div>
 
       {/* Lists */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={`${buttonClass} ${editor.isActive("bulletList") ? activeClass : ""}`}
@@ -96,18 +96,18 @@ export function MenuBar({ editor }: MenuBarProps) {
       </div>
 
       {/* Highlight */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
-          onClick={() => editor.chain().focus().toggleHighlight({ color: "#fef08a" }).run()}
-          className={`${buttonClass} ${editor.isActive("highlight", { color: "#fef08a" }) ? activeClass : ""}`}
+          onClick={() => editor.chain().focus().toggleHighlight({ color: "#fef081" }).run()}
+          className={`${buttonClass} ${editor.isActive("highlight", { color: "#fef081" }) ? activeClass : ""}`}
           title="Highlight"
         >
-          <span className="bg-yellow-200 px-1">형광펜</span>
+          <span style={{ backgroundColor: 'hsl(var(--editor-highlight-yellow))', color: 'hsl(var(--foreground))' }} className="px-1 rounded">형광펜</span>
         </button>
       </div>
 
       {/* Links */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
           onClick={() => {
             const url = window.prompt("URL을 입력하세요:");
@@ -132,7 +132,7 @@ export function MenuBar({ editor }: MenuBarProps) {
       </div>
 
       {/* Clear Formatting */}
-      <div className="flex gap-1 border-r border-gray-200 pr-2">
+      <div className="flex gap-1 border-r border-border pr-2">
         <button
           onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}
           className={buttonClass}

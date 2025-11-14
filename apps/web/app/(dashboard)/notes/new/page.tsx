@@ -63,7 +63,7 @@ export default function NewNotePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="노트 제목을 입력하세요"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
 
@@ -79,9 +79,9 @@ export default function NewNotePage() {
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+      <div className="mt-6 p-4 bg-muted rounded-lg">
         <h3 className="text-sm font-semibold mb-2">💡 에디터 단축키</h3>
-        <ul className="text-sm text-gray-600 space-y-1">
+        <ul className="text-sm text-muted-foreground space-y-1">
           <li><strong>Ctrl+B</strong>: 굵게</li>
           <li><strong>Ctrl+I</strong>: 기울임</li>
           <li><strong>Ctrl+U</strong>: 밑줄</li>
