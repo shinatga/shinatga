@@ -41,7 +41,7 @@ export default function HomePage() {
                 key={feature.title}
                 className="p-6 border rounded-lg"
               >
-                <div className="mb-4">
+                <div className="mb-4 flex items-center justify-center">
                   {IconComponent ? (
                     <IconComponent className="h-12 w-12" />
                   ) : (

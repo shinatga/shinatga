@@ -138,7 +138,6 @@ export default function NewNotePage() {
           <TipTapEditor
             placeholder="노트 내용을 입력하세요..."
             onUpdate={handleEditorUpdate}
-            className="min-h-[500px]"
           />
         </div>
       </div>
