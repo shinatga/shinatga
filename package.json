@@ -19,7 +19,8 @@
     "type-check": "turbo run type-check",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
-    "db:studio": "turbo run db:studio"
+    "db:studio": "turbo run db:studio",
+    "postinstall": "pnpm db:generate"
   },
   "devDependencies": {
     "@turbo/gen": "^2.3.3",
