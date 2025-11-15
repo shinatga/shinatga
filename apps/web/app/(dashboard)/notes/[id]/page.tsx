@@ -97,9 +97,6 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
     return null;
   }
 
-  // HTML 콘텐츠로 변환 (JSON 저장된 경우 대비)
-  const content = typeof note.content === "string" ? note.content : JSON.stringify(note.content);
-
   return (
     <div className="container py-8 max-w-5xl mx-auto">
       <div className="mb-6 flex items-center justify-between">
@@ -157,10 +154,9 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
 
         <div className="mt-8">
           <TipTapEditor
-            content={content}
+            content={note.content}
             editable={false}
             showMenuBar={false}
-            className="min-h-[400px]"
           />
         </div>
       </div>

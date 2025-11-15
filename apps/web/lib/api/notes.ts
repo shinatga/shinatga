@@ -7,7 +7,7 @@ export interface NoteWithRelations extends Note {
 
 export interface CreateNoteData {
   title: string;
-  content: any; // TipTap JSON content
+  content: string; // HTML string
   templateId?: string;
   tags?: string[];
   category?: string;
@@ -15,7 +15,7 @@ export interface CreateNoteData {
 
 export interface UpdateNoteData {
   title?: string;
-  content?: any;
+  content?: string; // HTML string
   tags?: string[];
   category?: string;
   isFavorite?: boolean;

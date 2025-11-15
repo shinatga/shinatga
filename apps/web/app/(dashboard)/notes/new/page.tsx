@@ -50,12 +50,11 @@ export default function NewNotePage() {
     setIsSaving(true);
 
     try {
-      // TipTap JSON 콘텐츠 가져오기
-      const jsonContent = editor?.getJSON() || { type: "doc", content: [] };
+      const htmlContent = editor?.getHTML() || "";
 
       const noteData: any = {
         title,
-        content: jsonContent,
+        content: htmlContent,
       };
 
       // 템플릿이 선택된 경우에만 포함
