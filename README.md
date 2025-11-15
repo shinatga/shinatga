@@ -7,7 +7,7 @@
 ```
 shinatga/
 ├── apps/
-│   └── web/                 # Next.js 14+ App Router
+│   └── web/                 # Next.js 15+ App Router
 ├── packages/
 │   ├── ui/                  # 공유 UI 컴포넌트 (shadcn/ui)
 │   ├── database/            # Prisma ORM
@@ -37,7 +37,7 @@ shinatga/
 
 | Category | Technology |
 |----------|-----------|
-| Framework | Next.js 14+ (App Router) |
+| Framework | Next.js 15+ (App Router) |
 | Monorepo | Turborepo + pnpm |
 | Database | PostgreSQL + Prisma |
 | Auth | ~~NextAuth.js v5~~ (비활성화됨) |
