@@ -7,9 +7,11 @@ import { useRouter } from "next/navigation";
 import { createNote } from "@/lib/api";
 import { getTemplates } from "@/lib/api";
 import type { Template } from "@shinatga/database";
+import { useDialog } from "@/hooks/useDialog";
 
 export default function NewNotePage() {
   const router = useRouter();
+  const { showAlert, showConfirm } = useDialog();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [editor, setEditor] = useState<Editor | null>(null);
@@ -41,16 +43,16 @@ export default function NewNotePage() {
 
   const handleSave = async () => {
     if (!title.trim()) {
-      alert("제목을 입력해주세요.");
+      await showAlert({ description: "제목을 입력해주세요." });
       return;
     }
 
     setIsSaving(true);
-    
+
     try {
       // TipTap JSON 콘텐츠 가져오기
       const jsonContent = editor?.getJSON() || { type: "doc", content: [] };
-      
+
       const noteData: any = {
         title,
         content: jsonContent,
@@ -60,21 +62,26 @@ export default function NewNotePage() {
       if (selectedTemplateId) {
         noteData.templateId = selectedTemplateId;
       }
-      
+
       await createNote(noteData);
 
-      alert("노트가 저장되었습니다!");
+      await showAlert({ description: "노트가 저장되었습니다!" });
       router.push("/notes");
     } catch (error) {
       console.error("노트 저장 실패:", error);
-      alert(error instanceof Error ? error.message : "노트 저장에 실패했습니다.");
+      await showAlert({
+        description: error instanceof Error ? error.message : "노트 저장에 실패했습니다."
+      });
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleCancel = () => {
-    if (confirm("작성 중인 내용이 저장되지 않습니다. 정말 취소하시겠습니까?")) {
+  const handleCancel = async () => {
+    const confirmed = await showConfirm({
+      description: "작성 중인 내용이 저장되지 않습니다. 정말 취소하시겠습니까?"
+    });
+    if (confirmed) {
       router.push("/notes");
     }
   };

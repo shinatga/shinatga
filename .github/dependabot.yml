@@ -1,0 +1,173 @@
+version: 2
+updates:
+  # Root package.json (pnpm workspace root)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "root"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+
+  # Web app (Next.js)
+  - package-ecosystem: "npm"
+    directory: "/apps/web"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "web-app"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(dev-deps)"
+      include: "scope"
+    groups:
+      nextjs:
+        patterns:
+          - "next*"
+          - "react*"
+          - "@next/*"
+      ui-dependencies:
+        patterns:
+          - "@radix-ui/*"
+          - "tailwindcss"
+          - "class-variance-authority"
+          - "clsx"
+
+  # Database package
+  - package-ecosystem: "npm"
+    directory: "/packages/database"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "database"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      prisma:
+        patterns:
+          - "prisma"
+          - "@prisma/*"
+
+  # UI package
+  - package-ecosystem: "npm"
+    directory: "/packages/ui"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "ui"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # Editor package
+  - package-ecosystem: "npm"
+    directory: "/packages/editor"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "editor"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    groups:
+      tiptap:
+        patterns:
+          - "@tiptap/*"
+          - "tiptap*"
+
+  # Templates package
+  - package-ecosystem: "npm"
+    directory: "/packages/templates"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "templates"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # ESLint config package
+  - package-ecosystem: "npm"
+    directory: "/packages/eslint-config"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "eslint"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+
+  # TypeScript config package
+  - package-ecosystem: "npm"
+    directory: "/packages/typescript-config"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Seoul"
+    open-pull-requests-limit: 3
+    versioning-strategy: increase
+    labels:
+      - "dependencies"
+      - "pnpm"
+      - "typescript"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

@@ -5,6 +5,7 @@ import React from "react";
 import { APP } from "@/lib/constants";
 import { ThemeProvider, ThemeScript } from "@/components/ThemeProvider";
 import { NavigationLoadingProvider } from "@/components/NavigationLoadingProvider";
+import { DialogProvider } from "@/components/DialogProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <NavigationLoadingProvider>
-            {children}
+            <DialogProvider>
+              {children}
+            </DialogProvider>
           </NavigationLoadingProvider>
         </ThemeProvider>
       </body>

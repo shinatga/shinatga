@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@shinatga/ui";
 import { TipTapEditor } from "@shinatga/editor";
 import { getNote, deleteNote, type NoteWithRelations } from "@/lib/api";
+import { useDialog } from "@/hooks/useDialog";
 
 interface NoteDetailPageProps {
   params: Promise<{ id: string }>;
@@ -12,6 +13,7 @@ interface NoteDetailPageProps {
 
 export default function NoteDetailPage({ params }: NoteDetailPageProps) {
   const router = useRouter();
+  const { showAlert, showConfirm } = useDialog();
   const [note, setNote] = useState<NoteWithRelations | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -34,7 +36,7 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
         setNote(data);
       } catch (error) {
         console.error("노트 로드 실패:", error);
-        alert("노트를 불러오는데 실패했습니다.");
+        await showAlert({ description: "노트를 불러오는데 실패했습니다." });
         router.push("/notes");
       } finally {
         setIsLoading(false);
@@ -42,21 +44,24 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
     };
 
     loadNote();
-  }, [noteId, router]);
+  }, [noteId, router, showAlert]);
 
   const handleDelete = async () => {
-    if (!confirm("정말로 이 노트를 삭제하시겠습니까?")) {
+    const confirmed = await showConfirm({
+      description: "정말로 이 노트를 삭제하시겠습니까?"
+    });
+    if (!confirmed) {
       return;
     }
 
     setIsDeleting(true);
     try {
       await deleteNote(noteId);
-      alert("노트가 삭제되었습니다.");
+      await showAlert({ description: "노트가 삭제되었습니다." });
       router.push("/notes");
     } catch (error) {
       console.error("노트 삭제 실패:", error);
-      alert("노트를 삭제하는데 실패했습니다.");
+      await showAlert({ description: "노트를 삭제하는데 실패했습니다." });
       setIsDeleting(false);
     }
   };

@@ -14,4 +14,17 @@ export { Input } from "./components/input";
 
 export { ThemeToggle, ThemeToggleExpanded } from "./components/theme-toggle";
 
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "./components/dialog";
+
 export { cn } from "./lib/utils";
