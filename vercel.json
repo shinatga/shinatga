@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "pnpm build --filter=@shinatga/web",
+  "buildCommand": "turbo run build --filter=@shinatga/web",
   "outputDirectory": "apps/web/.next",
   "framework": null,
   "installCommand": "pnpm install",
