@@ -4,6 +4,8 @@ import { PAGES } from "@/lib/constants";
 import { getNotesServer } from "@/lib/api/server";
 import { TemplateIcon } from "@/components/TemplateIcon";
 
+export const dynamic = 'force-dynamic';
+
 const formatDate = (date: Date | string) => {
   return new Date(date).toLocaleDateString("ko-KR", {
     year: "numeric",
