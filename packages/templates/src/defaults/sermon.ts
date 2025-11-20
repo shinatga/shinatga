@@ -26,6 +26,7 @@ export const sermonTemplate: Template = {
       id: "sermon-speaker",
       label: "설교자",
       type: "text",
+      required: false,
       placeholder: "설교자 이름",
     },
     {
@@ -40,6 +41,7 @@ export const sermonTemplate: Template = {
       id: "sermon-key-verse",
       label: "핵심 구절",
       type: "scripture",
+      required: false,
       placeholder: "가장 인상 깊었던 구절",
     },
     {
@@ -62,12 +64,14 @@ export const sermonTemplate: Template = {
       id: "sermon-prayer",
       label: "기도 제목",
       type: "textarea",
+      required: false,
       placeholder: "말씀과 관련된 기도 제목",
     },
     {
       id: "sermon-notes",
       label: "추가 메모",
       type: "rich-text",
+      required: false,
       placeholder: "기타 생각이나 질문 사항",
     },
   ],
