@@ -14,7 +14,6 @@ export default function NewNotePage() {
   const router = useRouter();
   const { showAlert, showConfirm } = useDialog();
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [editor, setEditor] = useState<Editor | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
@@ -39,7 +38,6 @@ export default function NewNotePage() {
 
   const handleEditorUpdate = (editorInstance: Editor) => {
     setEditor(editorInstance);
-    setContent(editorInstance.getHTML());
   };
 
   const handleSave = async () => {
