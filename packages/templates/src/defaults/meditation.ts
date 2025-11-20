@@ -4,7 +4,7 @@ export const meditationTemplate: Template = {
   name: "묵상 노트",
   description: "성경 묵상이나 QT 내용을 기록합니다",
   type: "meditation",
-  icon: "✝️",
+  icon: "BookA",
   color: "#10B981",
   isDefault: true,
   isPublic: true,

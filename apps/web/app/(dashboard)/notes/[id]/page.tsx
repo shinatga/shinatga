@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@shinatga/ui";
+import { ArrowLeft } from "lucide-react";
 import { TipTapEditor } from "@shinatga/editor";
 import { getNote, deleteNote, type NoteWithRelations } from "@/lib/api";
 import { useDialog } from "@/hooks/useDialog";
+import { TemplateIcon } from "@/components/TemplateIcon";
 
 interface NoteDetailPageProps {
   params: Promise<{ id: string }>;
@@ -102,12 +104,14 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button variant="outline" onClick={() => router.push("/notes")}>
-            ← 목록
+            <ArrowLeft className="w-4 h-4 mr-2" /> 목록
           </Button>
           {note.template && (
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-2xl">{note.template.icon}</span>
+                <span className="text-2xl">
+                  <TemplateIcon iconName={note.template.icon} className="w-6 h-6" />
+                </span>
                 <span className="text-sm text-muted-foreground">
                   {note.template.name}
                 </span>

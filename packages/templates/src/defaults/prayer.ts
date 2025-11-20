@@ -4,7 +4,7 @@ export const prayerTemplate: Template = {
   name: "기도 제목",
   description: "기도 제목과 응답을 기록하고 관리합니다",
   type: "prayer",
-  icon: "🙏",
+  icon: "MessageCircleMore",
   color: "#8B5CF6",
   isDefault: true,
   isPublic: true,

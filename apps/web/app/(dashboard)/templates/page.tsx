@@ -1,6 +1,7 @@
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from "@shinatga/ui";
 import { defaultTemplates } from "@shinatga/templates";
 import { PAGES } from "@/lib/constants";
+import { TemplateIcon } from "@/components/TemplateIcon";
 
 export default function TemplatesPage() {
   const { templates } = PAGES;
@@ -22,7 +23,9 @@ export default function TemplatesPage() {
             {defaultTemplates.map((template) => (
               <Card key={template.name}>
                 <CardHeader>
-                  <div className="text-4xl mb-2">{template.icon}</div>
+                  <div className="mb-2">
+                    <TemplateIcon iconName={template.icon} className="w-10 h-10" />
+                  </div>
                   <CardTitle>{template.name}</CardTitle>
                   <CardDescription>{template.description}</CardDescription>
                 </CardHeader>

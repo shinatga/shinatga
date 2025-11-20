@@ -4,7 +4,7 @@ export const sermonTemplate: Template = {
   name: "예배 말씀",
   description: "주일 예배나 모임에서 들은 설교 내용을 기록합니다",
   type: "sermon",
-  icon: "📖",
+  icon: "BookOpen",
   color: "#3B82F6",
   isDefault: true,
   isPublic: true,

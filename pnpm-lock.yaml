@@ -38,6 +38,9 @@ importers:
       framer-motion:
         specifier: ^12.23.24
         version: 12.23.24(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide-react:
+        specifier: ^0.553.0
+        version: 0.553.0(react@18.3.1)
       next:
         specifier: ^15.0.3
         version: 15.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -163,6 +166,9 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^2.10.3
         version: 2.27.1
+      lucide-react:
+        specifier: ^0.553.0
+        version: 0.553.0(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)

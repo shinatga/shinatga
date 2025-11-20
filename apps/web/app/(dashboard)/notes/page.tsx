@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from "@shinatga/ui";
 import { PAGES } from "@/lib/constants";
 import { getNotesServer } from "@/lib/api/server";
+import { TemplateIcon } from "@/components/TemplateIcon";
 
 const formatDate = (date: Date | string) => {
   return new Date(date).toLocaleDateString("ko-KR", {
@@ -47,7 +48,9 @@ export default async function NotesPage() {
                   <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="text-2xl">{note.template?.icon || "📝"}</div>
+                        <div className="text-2xl">
+                          <TemplateIcon iconName={note.template?.icon} className="w-8 h-8 text-muted-foreground" />
+                        </div>
                         <span className="text-xs text-muted-foreground">
                           {formatDate(note.createdAt)}
                         </span>

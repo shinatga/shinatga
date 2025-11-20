@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { TipTapEditor, type Editor } from "@shinatga/editor";
 import { Button } from "@shinatga/ui";
+import { Lightbulb } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { createNote } from "@/lib/api";
 import { getTemplates } from "@/lib/api";
@@ -116,7 +117,7 @@ export default function NewNotePage() {
             <option value="">템플릿 없이 자유롭게 작성</option>
             {templates.map((template) => (
               <option key={template.id} value={template.id}>
-                {template.icon} {template.name}
+                {template.name}
               </option>
             ))}
           </select>
@@ -149,7 +150,9 @@ export default function NewNotePage() {
       </div>
 
       <div className="mt-6 p-4 bg-muted rounded-lg">
-        <h3 className="text-sm font-semibold mb-2">💡 에디터 단축키</h3>
+        <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
+          <Lightbulb className="w-4 h-4" /> 에디터 단축키
+        </h3>
         <ul className="text-sm text-muted-foreground space-y-1">
           <li><strong>Ctrl+B</strong>: 굵게</li>
           <li><strong>Ctrl+I</strong>: 기울임</li>

@@ -33,8 +33,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
           {features.map((feature) => {
-            const hasIcon = "icon" in feature;
-            const IconComponent = hasIcon ? feature.icon : null;
+            const IconComponent = feature.icon;
 
             return (
               <div
@@ -42,13 +41,7 @@ export default function HomePage() {
                 className="p-6 border rounded-lg"
               >
                 <div className="mb-4 flex items-center justify-center">
-                  {IconComponent ? (
-                    <IconComponent className="h-12 w-12" />
-                  ) : (
-                    <span className="text-4xl">
-                      {"emoji" in feature ? feature.emoji : ""}
-                    </span>
-                  )}
+                  <IconComponent className="h-12 w-12" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
                 <p className="text-sm text-muted-foreground">

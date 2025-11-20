@@ -1,4 +1,4 @@
-import { Sprout, BookOpen } from "lucide-react";
+import { Sprout, BookOpen, BookA, MessageCircleMore } from "lucide-react";
 
 // 페이지별 텍스트 상수
 export const PAGES = {
@@ -20,12 +20,12 @@ export const PAGES = {
         description: "설교 제목, 본문, 적용점을 구조화하여 기록",
       },
       {
-        emoji: "✝️",
+        icon: BookA,
         title: "묵상 노트",
         description: "관찰, 해석, 적용, 기도의 체계적인 묵상",
       },
       {
-        emoji: "🙏",
+        icon: MessageCircleMore,
         title: "기도 제목",
         description: "기도 제목과 응답을 추적하고 관리",
       },

@@ -1,6 +1,23 @@
 "use client";
 
 import { type Editor } from "@tiptap/react";
+import { 
+  Bold, 
+  Italic, 
+  Underline, 
+  Strikethrough, 
+  List, 
+  ListOrdered, 
+  Highlighter, 
+  Link, 
+  Unlink, 
+  RemoveFormatting, 
+  Undo, 
+  Redo,
+  Heading1,
+  Heading2,
+  Heading3
+} from "lucide-react";
 
 interface MenuBarProps {
   editor: Editor | null;
@@ -11,8 +28,9 @@ export function MenuBar({ editor }: MenuBarProps) {
     return null;
   }
 
-  const buttonClass = "p-2 rounded hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors";
+  const buttonClass = "p-2 rounded hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center h-8 w-8";
   const activeClass = "bg-accent hover:bg-accent/80";
+  const iconClass = "w-4 h-4";
 
   return (
     <div className="border-b border-border p-2 flex flex-wrap gap-1 bg-card sticky top-0 z-10">
@@ -24,7 +42,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("bold") ? activeClass : ""}`}
           title="Bold (Ctrl+B)"
         >
-          <strong>B</strong>
+          <Bold className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
@@ -32,7 +50,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("italic") ? activeClass : ""}`}
           title="Italic (Ctrl+I)"
         >
-          <em>I</em>
+          <Italic className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleUnderline().run()}
@@ -40,7 +58,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("underline") ? activeClass : ""}`}
           title="Underline (Ctrl+U)"
         >
-          <u>U</u>
+          <Underline className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -48,7 +66,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("strike") ? activeClass : ""}`}
           title="Strikethrough"
         >
-          <s>S</s>
+          <Strikethrough className={iconClass} />
         </button>
       </div>
 
@@ -59,21 +77,21 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("heading", { level: 1 }) ? activeClass : ""}`}
           title="Heading 1"
         >
-          H1
+          <Heading1 className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={`${buttonClass} ${editor.isActive("heading", { level: 2 }) ? activeClass : ""}`}
           title="Heading 2"
         >
-          H2
+          <Heading2 className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           className={`${buttonClass} ${editor.isActive("heading", { level: 3 }) ? activeClass : ""}`}
           title="Heading 3"
         >
-          H3
+          <Heading3 className={iconClass} />
         </button>
       </div>
 
@@ -84,14 +102,14 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("bulletList") ? activeClass : ""}`}
           title="Bullet List"
         >
-          • 목록
+          <List className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={`${buttonClass} ${editor.isActive("orderedList") ? activeClass : ""}`}
           title="Ordered List"
         >
-          1. 목록
+          <ListOrdered className={iconClass} />
         </button>
       </div>
 
@@ -102,7 +120,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("highlight", { color: "#fef081" }) ? activeClass : ""}`}
           title="Highlight"
         >
-          <span style={{ backgroundColor: 'hsl(var(--editor-highlight-yellow))', color: 'hsl(var(--foreground))' }} className="px-1 rounded">형광펜</span>
+          <Highlighter className={iconClass} />
         </button>
       </div>
 
@@ -118,7 +136,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={`${buttonClass} ${editor.isActive("link") ? activeClass : ""}`}
           title="Add Link"
         >
-          🔗 링크
+          <Link className={iconClass} />
         </button>
         {editor.isActive("link") && (
           <button
@@ -126,7 +144,7 @@ export function MenuBar({ editor }: MenuBarProps) {
             className={buttonClass}
             title="Remove Link"
           >
-            🔗✕
+            <Unlink className={iconClass} />
           </button>
         )}
       </div>
@@ -138,7 +156,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={buttonClass}
           title="Clear Formatting"
         >
-          지우기
+          <RemoveFormatting className={iconClass} />
         </button>
       </div>
 
@@ -150,7 +168,7 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={buttonClass}
           title="Undo (Ctrl+Z)"
         >
-          ↶ 실행취소
+          <Undo className={iconClass} />
         </button>
         <button
           onClick={() => editor.chain().focus().redo().run()}
@@ -158,10 +176,9 @@ export function MenuBar({ editor }: MenuBarProps) {
           className={buttonClass}
           title="Redo (Ctrl+Y)"
         >
-          ↷ 다시실행
+          <Redo className={iconClass} />
         </button>
       </div>
     </div>
   );
 }
-
