@@ -10,6 +10,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.11.1",
     "@shinatga/database": "workspace:*",
     "@shinatga/editor": "workspace:*",
     "@shinatga/templates": "workspace:*",

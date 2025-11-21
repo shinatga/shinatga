@@ -1,6 +1,7 @@
 import { Button } from "@shinatga/ui";
 import Link from "next/link";
 import { PAGES, ROUTES } from "@/lib/constants";
+import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 
 export default function LoginPage() {
   const { login } = PAGES.auth;
@@ -16,11 +17,12 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-8 space-y-4">
-          <Button className="w-full" size="lg">
-            {login.button}
-          </Button>
+          {/* 기존 버튼은 아직 기능이 없으므로 유지하거나 비활성화 */}
+          {/* <Button className="w-full" size="lg" disabled>
+            {login.button} (준비중)
+          </Button> */}
 
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
@@ -29,7 +31,9 @@ export default function LoginPage() {
                 {login.divider}
               </span>
             </div>
-          </div>
+          </div> */}
+
+          <GoogleAuthButton />
 
           <p className="text-center text-sm">
             {login.noAccount}{" "}

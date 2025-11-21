@@ -7,6 +7,7 @@ import { ThemeProvider, ThemeScript } from "@/components/ThemeProvider";
 import { NavigationLoadingProvider } from "@/components/NavigationLoadingProvider";
 import { DialogProvider } from "@/components/DialogProvider";
 import { Suspense } from "react";
+import { AuthSessionProvider } from "@/components/auth/session-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,13 +28,15 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider>
-          <Suspense fallback={null}>
-            <NavigationLoadingProvider>
-              <DialogProvider>
-                {children}
-              </DialogProvider>
-            </NavigationLoadingProvider>
-          </Suspense>
+          <AuthSessionProvider>
+            <Suspense fallback={null}>
+              <NavigationLoadingProvider>
+                <DialogProvider>
+                  {children}
+                </DialogProvider>
+              </NavigationLoadingProvider>
+            </Suspense>
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
