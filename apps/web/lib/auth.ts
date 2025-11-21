@@ -14,7 +14,7 @@ import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@shinatga/database";
 import Google from "next-auth/providers/google";
-import type { NextAuthConfig } from "next-auth";
+import { authConfig } from "@/auth.config";
 
 // 환경 변수 체크 및 디버깅
 const missingEnvs: string[] = [];
@@ -28,28 +28,14 @@ if (missingEnvs.length > 0) {
   console.log("✅ [NextAuth] 필수 환경 변수가 모두 확인되었습니다.");
 }
 
-export const authConfig = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/login",
-  },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/notes");
-      const isOnAuth = nextUrl.pathname.startsWith("/login") || nextUrl.pathname.startsWith("/register");
-
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && isOnAuth) {
-        return Response.redirect(new URL("/notes", nextUrl));
-      }
-      return true;
-    },
+    ...authConfig.callbacks,
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.sub!;
@@ -62,7 +48,5 @@ export const authConfig = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-  ], 
-} satisfies NextAuthConfig;
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+  ],
+});
