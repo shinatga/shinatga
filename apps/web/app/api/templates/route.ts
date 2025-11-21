@@ -1,19 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@shinatga/database";
+import { auth } from "@/lib/auth";
 
 // GET /api/templates - 템플릿 목록 조회
 export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "로그인이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get("type");
     const isDefault = searchParams.get("isDefault");
 
     const where: any = {};
 
-    // 기본 템플릿 또는 공개 템플릿만 조회
+    // 기본 템플릿 또는 본인이 만든 템플릿만 조회
     where.OR = [
       { isDefault: true },
-      { isPublic: true },
+      { userId: session.user.id },
     ];
 
     if (type) where.type = type;
@@ -40,6 +50,15 @@ export async function GET(request: NextRequest) {
 // POST /api/templates - 커스텀 템플릿 생성
 export async function POST(request: NextRequest) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "로그인이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { name, description, type, fields, icon, color } = body;
 
@@ -50,13 +69,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: 인증 구현 후 실제 userId 사용
-    let userId: string | undefined;
-    const firstUser = await prisma.user.findFirst();
-    if (firstUser) {
-      userId = firstUser.id;
-    }
-
     const template = await prisma.template.create({
       data: {
         name,
@@ -65,7 +77,7 @@ export async function POST(request: NextRequest) {
         fields,
         icon,
         color,
-        userId,
+        userId: session.user.id,
         isDefault: false,
         isPublic: false,
       },

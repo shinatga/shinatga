@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@shinatga/database";
+import { auth } from "@/lib/auth";
 
 // GET /api/notes/[id] - 특정 노트 조회
 export async function GET(
@@ -7,10 +8,22 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "로그인이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params;
 
     const note = await prisma.note.findUnique({
-      where: { id },
+      where: {
+        id,
+        userId: session.user.id,
+      },
       include: {
         template: true,
         tags: true,
@@ -47,13 +60,25 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "로그인이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params;
     const body = await request.json();
     const { title, content, tags, category, isFavorite, isPinned, isArchived } = body;
 
-    // 노트 존재 확인
+    // 노트 존재 및 소유권 확인
     const existingNote = await prisma.note.findUnique({
-      where: { id },
+      where: {
+        id,
+        userId: session.user.id,
+      },
     });
 
     if (!existingNote) {
@@ -114,11 +139,23 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const session = await auth();
+
+    if (!session?.user?.id) {
+      return NextResponse.json(
+        { error: "로그인이 필요합니다." },
+        { status: 401 }
+      );
+    }
+
     const { id } = await params;
 
-    // 노트 존재 확인
+    // 노트 존재 및 소유권 확인
     const existingNote = await prisma.note.findUnique({
-      where: { id },
+      where: {
+        id,
+        userId: session.user.id,
+      },
     });
 
     if (!existingNote) {
