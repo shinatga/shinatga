@@ -1,4 +1,3 @@
-import { Button } from "@shinatga/ui";
 import Link from "next/link";
 import { PAGES, ROUTES } from "@/lib/constants";
 import { GoogleAuthButton } from "@/components/auth/google-auth-button";
