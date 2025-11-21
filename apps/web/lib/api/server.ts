@@ -1,5 +1,6 @@
 import { prisma } from "@shinatga/database";
 import type { Note, Template, Tag } from "@shinatga/database";
+import { auth } from "@/lib/auth";
 
 export interface NoteWithRelations extends Note {
   template: Template | null;
@@ -29,6 +30,12 @@ export interface NotesListResponse {
 export async function getNotesServer(
   params?: NotesListParams
 ): Promise<NotesListResponse> {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("로그인이 필요합니다.");
+  }
+
   const {
     templateId,
     isFavorite,
@@ -38,10 +45,9 @@ export async function getNotesServer(
     offset = 0,
   } = params || {};
 
-  const where: any = {};
-
-  // TODO: 인증 구현 후 userId 필터 추가
-  // where.userId = session.user.id;
+  const where: any = {
+    userId: session.user.id,
+  };
 
   if (templateId) where.templateId = templateId;
   if (isFavorite !== undefined) where.isFavorite = isFavorite;
