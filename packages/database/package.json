@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@shinatga/typescript-config": "workspace:*",
-    "prisma": "^6.0.1",
+    "prisma": "^7.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
