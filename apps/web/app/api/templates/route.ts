@@ -5,6 +5,28 @@ import { auth } from "@/lib/auth";
 // GET /api/templates - 템플릿 목록 조회
 export async function GET(request: NextRequest) {
   try {
+    const searchParams = request.nextUrl.searchParams;
+    const type = searchParams.get("type");
+    const isDefault = searchParams.get("isDefault");
+
+    const where: any = {};
+
+    // 기본 템플릿만 조회하는 경우 (인증 불필요)
+    if (isDefault === "true") {
+      where.isDefault = true;
+      if (type) where.type = type;
+
+      const templates = await prisma.template.findMany({
+        where,
+        orderBy: [
+          { createdAt: "desc" },
+        ],
+      });
+
+      return NextResponse.json(templates);
+    }
+
+    // 커스텀 템플릿 조회 시에는 인증 필요
     const session = await auth();
 
     if (!session?.user?.id) {
@@ -14,12 +36,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const searchParams = request.nextUrl.searchParams;
-    const type = searchParams.get("type");
-    const isDefault = searchParams.get("isDefault");
-
-    const where: any = {};
-
     // 기본 템플릿 또는 본인이 만든 템플릿만 조회
     where.OR = [
       { isDefault: true },
@@ -27,7 +43,6 @@ export async function GET(request: NextRequest) {
     ];
 
     if (type) where.type = type;
-    if (isDefault !== null) where.isDefault = isDefault === "true";
 
     const templates = await prisma.template.findMany({
       where,
