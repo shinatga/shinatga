@@ -8,7 +8,9 @@ import { useRouter } from "next/navigation";
 import { createNote } from "@/lib/api";
 import { getTemplates } from "@/lib/api";
 import type { Template } from "@shinatga/database";
+import type { TemplateField } from "@shinatga/templates";
 import { useDialog } from "@/hooks/useDialog";
+import { TemplateFieldRenderer } from "@/components/TemplateFieldRenderer";
 
 export default function NewNotePage() {
   const router = useRouter();
@@ -18,6 +20,9 @@ export default function NewNotePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [templates, setTemplates] = useState<Template[]>([]);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>("");
+  const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
+  const [templateFieldValues, setTemplateFieldValues] = useState<Record<string, any>>({});
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     // 템플릿 목록 로드 (백그라운드)
@@ -40,23 +45,96 @@ export default function NewNotePage() {
     setEditor(editorInstance);
   };
 
+  const handleTemplateChange = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+    const template = templates.find((t) => t.id === templateId);
+    setSelectedTemplate(template || null);
+    setTemplateFieldValues({});
+    setFieldErrors({});
+    setEditor(null);
+  };
+
+  const handleFieldChange = (fieldId: string, value: any) => {
+    setTemplateFieldValues((prev) => ({ ...prev, [fieldId]: value }));
+    if (fieldErrors[fieldId]) {
+      setFieldErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[fieldId];
+        return newErrors;
+      });
+    }
+  };
+
+  const convertTemplateDataToHTML = (): string => {
+    if (!selectedTemplate) return "";
+
+    let html = '<div class="template-note">';
+
+    const fields = selectedTemplate.fields as TemplateField[];
+    fields.forEach((field: TemplateField) => {
+      const value = templateFieldValues[field.id];
+      if (!value) return;
+
+      html += `<div class="field-group">`;
+      html += `<h3 class="field-label">${field.label}</h3>`;
+
+      if (field.type === "rich-text") {
+        html += `<div class="field-content">${value}</div>`;
+      } else {
+        const escapedValue = value.toString().replace(/\n/g, '<br>');
+        html += `<div class="field-content"><p>${escapedValue}</p></div>`;
+      }
+
+      html += `</div>`;
+    });
+
+    html += '</div>';
+    return html;
+  };
+
+  const validateTemplateFields = (): boolean => {
+    if (!selectedTemplate) return true;
+
+    const errors: Record<string, string> = {};
+
+    const fields = selectedTemplate.fields as TemplateField[];
+    fields.forEach((field: TemplateField) => {
+      if (field.required && !templateFieldValues[field.id]) {
+        errors[field.id] = `${field.label}은(는) 필수 항목입니다.`;
+      }
+    });
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleSave = async () => {
     if (!title.trim()) {
       await showAlert({ description: "제목을 입력해주세요." });
       return;
     }
 
+    if (selectedTemplate && !validateTemplateFields()) {
+      await showAlert({ description: "필수 항목을 모두 입력해주세요." });
+      return;
+    }
+
     setIsSaving(true);
 
     try {
-      const htmlContent = editor?.getHTML() || "";
+      let htmlContent: string;
+
+      if (selectedTemplate) {
+        htmlContent = convertTemplateDataToHTML();
+      } else {
+        htmlContent = editor?.getHTML() || "";
+      }
 
       const noteData: any = {
         title,
         content: htmlContent,
       };
 
-      // 템플릿이 선택된 경우에만 포함
       if (selectedTemplateId) {
         noteData.templateId = selectedTemplateId;
       }
@@ -108,8 +186,8 @@ export default function NewNotePage() {
           <select
             id="template"
             value={selectedTemplateId}
-            onChange={(e) => setSelectedTemplateId(e.target.value)}
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+            onChange={(e) => handleTemplateChange(e.target.value)}
+            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring"
             disabled={isSaving}
           >
             <option value="">템플릿 없이 자유롭게 작성</option>
@@ -131,19 +209,34 @@ export default function NewNotePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="노트 제목을 입력하세요"
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring"
             disabled={isSaving}
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
-            내용
+            {selectedTemplate ? "템플릿 작성" : "내용"}
           </label>
-          <TipTapEditor
-            placeholder="노트 내용을 입력하세요..."
-            onUpdate={handleEditorUpdate}
-          />
+          {selectedTemplate ? (
+            <div className="space-y-4">
+              {(selectedTemplate.fields as TemplateField[]).map((field: TemplateField) => (
+                <TemplateFieldRenderer
+                  key={field.id}
+                  field={field}
+                  value={templateFieldValues[field.id]}
+                  onChange={handleFieldChange}
+                  error={fieldErrors[field.id]}
+                  onEditorUpdate={field.type === "rich-text" ? setEditor : undefined}
+                />
+              ))}
+            </div>
+          ) : (
+            <TipTapEditor
+              placeholder="노트 내용을 입력하세요..."
+              onUpdate={handleEditorUpdate}
+            />
+          )}
         </div>
       </div>
 
