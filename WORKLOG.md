@@ -76,3 +76,63 @@
 - ✅ 로컬 데이터베이스 시딩 성공 (3개 템플릿 생성)
 - ✅ 템플릿 API 인증 없이 정상 작동
 - ✅ 프로덕션 환경에서도 `/api/seed` POST 요청으로 시딩 가능
+
+---
+
+### 동적 반복 필드 기능 구현
+
+**목표:**
+목장원을 동적으로 추가/삭제할 수 있는 반복 필드 시스템 구현
+
+**작업 내용:**
+
+1. **타입 시스템 확장**
+   - `packages/templates/src/types.ts`:
+     - `repeatable` 필드 타입 추가
+     - `Subfield` 스키마 정의 (반복 필드의 하위 필드)
+     - `minItems`, `maxItems` 속성 추가
+
+2. **기도제목 템플릿 재설계**
+   - `packages/templates/src/defaults/prayer.ts`:
+     - "목장 기도제목"으로 템플릿 명 변경
+     - 필드 2개로 단순화 (날짜 + 목장원 반복 필드)
+     - 각 목장원마다 이름과 기도제목 입력 가능
+
+3. **반복 필드 렌더러 컴포넌트**
+   - `apps/web/components/RepeatableFieldRenderer.tsx` (NEW):
+     - 동적 항목 추가/삭제 기능
+     - 서브필드 타입별 렌더링 (text, textarea, date, select, scripture)
+     - 깔끔한 UI와 validation
+
+4. **기존 컴포넌트 통합**
+   - `apps/web/components/TemplateFieldRenderer.tsx`:
+     - `repeatable` 케이스 추가
+     - RepeatableFieldRenderer 통합
+
+5. **폼 로직 업데이트**
+   - `apps/web/app/(dashboard)/notes/new/page.tsx`:
+     - 반복 필드를 HTML로 변환하는 로직 추가
+     - 반복 필드 검증 로직 (minItems, maxItems)
+
+**기술적 특징:**
+- 동적으로 목장원 추가/삭제 가능
+- 각 목장원마다 독립적인 입력 필드
+- TypeScript 타입 안전성 100% 유지
+- 모든 타입 체크 통과 ✅
+
+**데이터 구조 예시:**
+```json
+{
+  "prayer-date": "2025-11-28",
+  "prayer-members": [
+    {
+      "member-name": "김철수",
+      "member-prayer": "직장에서의 승진..."
+    },
+    {
+      "member-name": "이영희",
+      "member-prayer": "자녀 대학 입시..."
+    }
+  ]
+}
+```

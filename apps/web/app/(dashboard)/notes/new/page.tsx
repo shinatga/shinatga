@@ -80,6 +80,30 @@ export default function NewNotePage() {
 
       if (field.type === "rich-text") {
         html += `<div class="field-content">${value}</div>`;
+      } else if (field.type === "repeatable") {
+        // 반복 필드 처리
+        const items = value as any[];
+        html += `<div class="field-content repeatable-items">`;
+
+        items.forEach((item, index) => {
+          html += `<div class="repeatable-item" style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem;">`;
+          html += `<h4 style="font-weight: 600; margin-bottom: 0.75rem;">항목 ${index + 1}</h4>`;
+
+          field.subfields?.forEach((subfield) => {
+            const subfieldValue = item[subfield.id];
+            if (subfieldValue) {
+              html += `<div style="margin-bottom: 0.5rem;">`;
+              html += `<strong>${subfield.label}:</strong> `;
+              const escapedValue = subfieldValue.toString().replace(/\n/g, '<br>');
+              html += `<span>${escapedValue}</span>`;
+              html += `</div>`;
+            }
+          });
+
+          html += `</div>`;
+        });
+
+        html += `</div>`;
       } else {
         const escapedValue = value.toString().replace(/\n/g, '<br>');
         html += `<div class="field-content"><p>${escapedValue}</p></div>`;
@@ -99,8 +123,27 @@ export default function NewNotePage() {
 
     const fields = selectedTemplate.fields as TemplateField[];
     fields.forEach((field: TemplateField) => {
-      if (field.required && !templateFieldValues[field.id]) {
-        errors[field.id] = `${field.label}은(는) 필수 항목입니다.`;
+      const value = templateFieldValues[field.id];
+
+      if (field.type === "repeatable") {
+        // 반복 필드 검증
+        if (field.required && (!value || value.length === 0)) {
+          errors[field.id] = `${field.label}에 최소 1개 이상의 항목을 추가해주세요.`;
+        } else if (value && Array.isArray(value)) {
+          // minItems 검증
+          if (field.minItems && value.length < field.minItems) {
+            errors[field.id] = `${field.label}에 최소 ${field.minItems}개 이상의 항목이 필요합니다.`;
+          }
+          // maxItems 검증
+          if (field.maxItems && value.length > field.maxItems) {
+            errors[field.id] = `${field.label}은(는) 최대 ${field.maxItems}개까지만 추가할 수 있습니다.`;
+          }
+        }
+      } else {
+        // 일반 필드 검증
+        if (field.required && !value) {
+          errors[field.id] = `${field.label}은(는) 필수 항목입니다.`;
+        }
       }
     });
 

@@ -10,9 +10,22 @@ export const TemplateFieldTypeSchema = z.enum([
   "select",
   "multiselect",
   "tags",
+  "repeatable",
 ]);
 
 export type TemplateFieldType = z.infer<typeof TemplateFieldTypeSchema>;
+
+// Subfield Schema for repeatable fields
+export const SubfieldSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  type: z.enum(["text", "textarea", "date", "select", "scripture"]),
+  required: z.boolean().default(false),
+  placeholder: z.string().optional(),
+  options: z.array(z.string()).optional(),
+});
+
+export type Subfield = z.infer<typeof SubfieldSchema>;
 
 // Template Field Schema
 export const TemplateFieldSchema = z.object({
@@ -24,6 +37,9 @@ export const TemplateFieldSchema = z.object({
   description: z.string().optional(),
   defaultValue: z.any().optional(),
   options: z.array(z.string()).optional(), // For select/multiselect
+  subfields: z.array(SubfieldSchema).optional(), // For repeatable fields
+  minItems: z.number().optional(), // Minimum number of items for repeatable
+  maxItems: z.number().optional(), // Maximum number of items for repeatable
   validation: z.object({
     min: z.number().optional(),
     max: z.number().optional(),

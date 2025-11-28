@@ -3,6 +3,7 @@
 import { Input } from "@shinatga/ui";
 import { TipTapEditor, type Editor } from "@shinatga/editor";
 import type { TemplateField } from "@shinatga/templates";
+import { RepeatableFieldRenderer } from "./RepeatableFieldRenderer";
 
 interface TemplateFieldRendererProps {
   field: TemplateField;
@@ -96,10 +97,25 @@ export function TemplateFieldRenderer({
           </div>
         );
 
+      case "repeatable":
+        return (
+          <RepeatableFieldRenderer
+            field={field}
+            value={value || []}
+            onChange={onChange}
+            error={error}
+          />
+        );
+
       default:
         return <div className="text-muted-foreground">지원하지 않는 필드 타입입니다.</div>;
     }
   };
+
+  // repeatable 타입은 자체적으로 label과 description을 렌더링
+  if (field.type === "repeatable") {
+    return renderInput();
+  }
 
   return (
     <div>
