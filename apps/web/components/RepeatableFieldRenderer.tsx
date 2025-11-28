@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button, Input } from "@shinatga/ui";
 import { Plus, X } from "lucide-react";
 import type { TemplateField, Subfield } from "@shinatga/templates";
