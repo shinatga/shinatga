@@ -136,3 +136,58 @@
   ]
 }
 ```
+
+---
+
+### 템플릿 시딩 로직 개선 및 중복 제거
+
+**문제 상황:**
+- 템플릿 이름이 변경되면 기존 템플릿과 새 템플릿이 별도로 생성되는 문제
+- DB에 "목장 기도제목" 템플릿이 2개 중복 생성됨
+- seed 로직이 `name` 기준으로 중복 확인하여 이름 변경 대응 불가
+
+**원인 분석:**
+- `seed.ts`와 `route.ts`가 `name` 필드로 템플릿 중복 확인
+- 템플릿 이름 변경 시 ("기도 제목" → "목장 기도제목") 새 템플릿으로 인식
+- `findFirst`는 하나만 찾아서 업데이트하므로 중복 템플릿 미처리
+
+**변경 파일:**
+
+1. **Seed 스크립트 개선**
+   - `packages/database/prisma/seed.ts`:
+     - 중복 확인 기준을 `name` → `type`으로 변경
+     - 템플릿 이름 변경에도 기존 템플릿 자동 업데이트
+     - `name` 필드도 업데이트에 포함하도록 개선
+
+2. **API 시드 엔드포인트 개선**
+   - `apps/web/app/api/seed/route.ts`:
+     - 중복 확인 기준을 `name` → `type`으로 변경
+     - `findFirst` → `findMany`로 변경하여 모든 중복 검색
+     - **중복 제거 로직 추가**: 가장 오래된 템플릿 하나만 남기고 나머지 자동 삭제
+     - 업데이트 시 `name` 필드 포함하여 템플릿 이름 변경 대응
+
+**결과:**
+- ✅ 템플릿 `type` 기준으로 중복 관리
+- ✅ 중복된 "목장 기도제목" 템플릿 1개 자동 삭제
+- ✅ 템플릿 이름 변경 시에도 기존 템플릿 정상 업데이트
+- ✅ 향후 템플릿 변경 시 안정적인 시딩 보장
+
+**기술적 개선:**
+```typescript
+// Before: name 기준 중복 확인
+const existing = await prisma.template.findFirst({
+  where: { name: template.name, isDefault: true }
+});
+
+// After: type 기준 + 중복 제거
+const existingTemplates = await prisma.template.findMany({
+  where: { type: template.type, isDefault: true },
+  orderBy: { createdAt: 'asc' }
+});
+const [keepTemplate, ...duplicates] = existingTemplates;
+if (duplicates.length > 0) {
+  await prisma.template.deleteMany({
+    where: { id: { in: duplicates.map(t => t.id) } }
+  });
+}
+```

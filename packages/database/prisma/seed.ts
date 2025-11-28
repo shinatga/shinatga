@@ -10,27 +10,28 @@ async function main() {
   const templates = defaultTemplates;
 
   for (const template of templates) {
-    // 이미 존재하는지 확인
+    // type 기준으로 기존 템플릿 확인 (이름 변경에도 대응)
     const existing = await prisma.template.findFirst({
       where: {
-        name: template.name,
+        type: template.type,
         isDefault: true
       }
     });
 
     if (existing) {
-      console.log(`⏭️  템플릿 이미 존재: ${template.name}`);
-      // 기존 템플릿을 새 필드 구조로 업데이트
+      console.log(`⏭️  템플릿 이미 존재: ${existing.name} → ${template.name}`);
+      // 기존 템플릿을 새 데이터로 완전히 업데이트
       await prisma.template.update({
         where: { id: existing.id },
         data: {
-          fields: template.fields,
+          name: template.name,
           description: template.description,
+          fields: template.fields,
           icon: template.icon,
           color: template.color,
         },
       });
-      console.log(`🔄 템플릿 업데이트: ${template.name}`);
+      console.log(`🔄 템플릿 업데이트 완료: ${template.name}`);
       continue;
     }
 

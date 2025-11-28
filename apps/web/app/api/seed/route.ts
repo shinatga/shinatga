@@ -8,26 +8,45 @@ export async function POST() {
     const results = [];
 
     for (const template of defaultTemplates) {
-      // 이미 존재하는지 확인
-      const existing = await prisma.template.findFirst({
+      // type 기준으로 모든 기존 템플릿 조회 (중복 확인)
+      const existingTemplates = await prisma.template.findMany({
         where: {
-          name: template.name,
+          type: template.type,
           isDefault: true
-        }
+        },
+        orderBy: { createdAt: 'asc' } // 가장 오래된 것부터
       });
 
-      if (existing) {
-        // 기존 템플릿을 새 필드 구조로 업데이트
+      if (existingTemplates.length > 0) {
+        // 첫 번째(가장 오래된) 템플릿만 업데이트하고 나머지는 삭제
+        const [keepTemplate, ...duplicates] = existingTemplates;
+
+        // 중복 템플릿 삭제
+        if (duplicates.length > 0) {
+          await prisma.template.deleteMany({
+            where: {
+              id: { in: duplicates.map(t => t.id) }
+            }
+          });
+          results.push({
+            action: "removed_duplicates",
+            count: duplicates.length,
+            type: template.type
+          });
+        }
+
+        // 유지할 템플릿 업데이트
         const updated = await prisma.template.update({
-          where: { id: existing.id },
+          where: { id: keepTemplate.id },
           data: {
-            fields: template.fields,
+            name: template.name,
             description: template.description,
+            fields: template.fields,
             icon: template.icon,
             color: template.color,
           },
         });
-        results.push({ action: "updated", template: updated.name });
+        results.push({ action: "updated", template: `${keepTemplate.name} → ${updated.name}` });
       } else {
         // 새 템플릿 생성
         const created = await prisma.template.create({
