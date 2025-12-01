@@ -33,6 +33,9 @@ lerna-debug.log*
 # Debug
 .turbo
 
+# TypeScript
+*.tsbuildinfo
+
 # Env files
 .env
 .env*.local
