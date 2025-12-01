@@ -84,7 +84,7 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
 
   if (isLoading) {
     return (
-      <div className="container py-8 max-w-5xl mx-auto">
+      <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
@@ -100,54 +100,56 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
   }
 
   return (
-    <div className="container py-8 max-w-5xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Button variant="outline" onClick={() => router.push("/notes")}>
-            <ArrowLeft className="w-4 h-4 mr-2" /> 목록
+    <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
+      {/* Header Actions */}
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+          <Button variant="outline" size="sm" onClick={() => router.push("/notes")} className="shrink-0">
+            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" /> 
+            <span className="hidden sm:inline">목록</span>
           </Button>
           {note.template && (
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">
-                  <TemplateIcon iconName={note.template.icon} className="w-6 h-6" />
-                </span>
-                <span className="text-sm text-muted-foreground">
-                  {note.template.name}
-                </span>
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl sm:text-2xl">
+                <TemplateIcon iconName={note.template.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
+              </span>
+              <span className="text-xs sm:text-sm text-muted-foreground">
+                {note.template.name}
+              </span>
             </div>
           )}
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleEdit}>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" size="sm" onClick={handleEdit} className="flex-1 sm:flex-none">
             수정
           </Button>
           <Button
             variant="destructive"
+            size="sm"
             onClick={handleDelete}
             disabled={isDeleting}
+            className="flex-1 sm:flex-none"
           >
             {isDeleting ? "삭제 중..." : "삭제"}
           </Button>
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div>
-          <h1 className="text-4xl font-bold mb-2">{note.title}</h1>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">{note.title}</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
             <span>작성: {formatDate(note.createdAt)}</span>
             {note.updatedAt !== note.createdAt && (
               <span>수정: {formatDate(note.updatedAt)}</span>
             )}
           </div>
           {note.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
               {note.tags.map((tag) => (
                 <span
                   key={tag.id}
-                  className="text-sm px-3 py-1 bg-muted rounded-full"
+                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-muted rounded-full"
                 >
                   {tag.name}
                 </span>
@@ -156,7 +158,7 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
           )}
         </div>
 
-        <div className="mt-8">
+        <div className="mt-6 sm:mt-8">
           <TipTapEditor
             content={note.content}
             editable={false}

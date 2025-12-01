@@ -13,7 +13,7 @@ export function Lnb() {
   const { data: session } = useSession();
 
   return (
-    <aside className="w-64 border-r bg-card flex flex-col">
+    <aside className="hidden md:flex w-64 border-r bg-card flex-col">
       <div className="p-6 flex items-center gap-2">
         <APP.icon className="h-7 w-7" />
         <h1 className="text-2xl font-bold">{APP.name}</h1>

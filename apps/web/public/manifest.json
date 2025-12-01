@@ -1,0 +1,28 @@
+{
+  "name": "시냇가 - 템플릿 기반 노트 앱",
+  "short_name": "시냇가",
+  "description": "노트, 제목을 체계적으로 관리하는 템플릿 기반 노트 앱",
+  "start_url": "/notes",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "/icons/icon-192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"]
+}
+

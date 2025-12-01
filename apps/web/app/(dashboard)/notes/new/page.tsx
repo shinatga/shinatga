@@ -208,14 +208,14 @@ export default function NewNotePage() {
   // 템플릿 로딩은 백그라운드에서 진행, 사용자는 바로 작성 가능
 
   return (
-    <div className="container py-8 max-w-5xl mx-auto">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">새 노트 작성</h1>
-        <div className="flex gap-2">
-          <Button variant="outline" onClick={handleCancel} disabled={isSaving}>
+    <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+        <h1 className="text-2xl sm:text-3xl font-bold">새 노트 작성</h1>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" onClick={handleCancel} disabled={isSaving} className="flex-1 sm:flex-none">
             취소
           </Button>
-          <Button onClick={handleSave} disabled={isSaving}>
+          <Button onClick={handleSave} disabled={isSaving} className="flex-1 sm:flex-none">
             {isSaving ? "저장 중..." : "저장"}
           </Button>
         </div>
@@ -230,7 +230,7 @@ export default function NewNotePage() {
             id="template"
             value={selectedTemplateId}
             onChange={(e) => handleTemplateChange(e.target.value)}
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring"
+            className="w-full px-3 sm:px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring text-base"
             disabled={isSaving}
           >
             <option value="">템플릿 없이 자유롭게 작성</option>
@@ -252,7 +252,7 @@ export default function NewNotePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="노트 제목을 입력하세요"
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring"
+            className="w-full px-3 sm:px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring text-base"
             disabled={isSaving}
           />
         </div>
@@ -283,7 +283,7 @@ export default function NewNotePage() {
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-muted rounded-lg">
+      <div className="mt-6 p-4 bg-muted rounded-lg hidden sm:block">
         <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
           <Lightbulb className="w-4 h-4" /> 에디터 단축키
         </h3>
