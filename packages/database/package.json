@@ -12,7 +12,7 @@
     "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.0.1"
+    "@prisma/client": "^7.0.1"
   },
   "devDependencies": {
     "@shinatga/typescript-config": "workspace:*",
