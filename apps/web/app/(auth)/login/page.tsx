@@ -1,9 +1,17 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { PAGES, ROUTES } from "@/lib/constants";
 import { GoogleAuthButton } from "@/components/auth/google-auth-button";
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const session = await auth();
   const { login } = PAGES.auth;
+
+  // 이미 로그인한 사용자는 대시보드로 리다이렉트
+  if (session?.user) {
+    redirect(ROUTES.notes);
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center">

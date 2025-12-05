@@ -1,9 +1,17 @@
 import { Button } from "@shinatga/ui";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { PAGES, ROUTES } from "@/lib/constants";
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+  const session = await auth();
   const { register } = PAGES.auth;
+
+  // 이미 로그인한 사용자는 대시보드로 리다이렉트
+  if (session?.user) {
+    redirect(ROUTES.notes);
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center">
