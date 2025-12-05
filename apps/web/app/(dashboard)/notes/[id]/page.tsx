@@ -85,10 +85,10 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
   if (isLoading) {
     return (
       <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
-        <div className="flex items-center justify-center py-12">
+        <div className="flex items-center justify-center py-16 sm:py-24">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">로딩 중...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-t-2 border-primary mx-auto"></div>
+            <p className="mt-5 text-sm sm:text-base text-muted-foreground font-medium">로딩 중...</p>
           </div>
         </div>
       </div>
@@ -102,24 +102,24 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
   return (
     <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
       {/* Header Actions */}
-      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
-        <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
           <Button variant="outline" size="sm" onClick={() => router.push("/notes")} className="shrink-0">
-            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" /> 
+            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">목록</span>
           </Button>
           {note.template && (
-            <div className="flex items-center gap-2">
-              <span className="text-xl sm:text-2xl">
-                <TemplateIcon iconName={note.template.icon} className="w-5 h-5 sm:w-6 sm:h-6" />
-              </span>
-              <span className="text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center gap-2.5">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-muted/50 flex items-center justify-center">
+                <TemplateIcon iconName={note.template.icon} className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground" />
+              </div>
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground">
                 {note.template.name}
               </span>
             </div>
           )}
         </div>
-        <div className="flex gap-2 w-full sm:w-auto">
+        <div className="flex gap-2.5 w-full sm:w-auto">
           <Button variant="outline" size="sm" onClick={handleEdit} className="flex-1 sm:flex-none">
             수정
           </Button>
@@ -135,21 +135,25 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
         </div>
       </div>
 
-      <div className="space-y-3 sm:space-y-4">
+      <div className="space-y-5 sm:space-y-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">{note.title}</h1>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-            <span>작성: {formatDate(note.createdAt)}</span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">{note.title}</h1>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs sm:text-sm">
+            <span className="font-medium text-muted-foreground/80 bg-muted/30 px-2.5 py-1 rounded-md w-fit">
+              작성: {formatDate(note.createdAt)}
+            </span>
             {note.updatedAt !== note.createdAt && (
-              <span>수정: {formatDate(note.updatedAt)}</span>
+              <span className="font-medium text-muted-foreground/80 bg-muted/30 px-2.5 py-1 rounded-md w-fit">
+                수정: {formatDate(note.updatedAt)}
+              </span>
             )}
           </div>
           {note.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-3 sm:mt-4">
+            <div className="flex flex-wrap gap-1.5 mt-4">
               {note.tags.map((tag) => (
                 <span
                   key={tag.id}
-                  className="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-muted rounded-full"
+                  className="text-xs px-2.5 py-1 bg-muted/60 rounded-full"
                 >
                   {tag.name}
                 </span>
@@ -158,7 +162,7 @@ export default function NoteDetailPage({ params }: NoteDetailPageProps) {
           )}
         </div>
 
-        <div className="mt-6 sm:mt-8">
+        <div className="mt-8 bg-muted/30 rounded-lg border border-border/50 overflow-hidden">
           <TipTapEditor
             content={note.content}
             editable={false}

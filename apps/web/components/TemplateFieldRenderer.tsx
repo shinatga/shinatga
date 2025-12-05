@@ -25,6 +25,8 @@ export function TemplateFieldRenderer({
   };
 
   const renderInput = () => {
+    const inputClassName = "w-full px-3.5 py-2.5 border border-border/50 bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-colors";
+
     switch (field.type) {
       case "text":
         return (
@@ -33,7 +35,7 @@ export function TemplateFieldRenderer({
             value={value || ""}
             onChange={(e) => handleChange(e.target.value)}
             placeholder={field.placeholder}
-            className="w-full"
+            className={inputClassName}
           />
         );
 
@@ -43,7 +45,7 @@ export function TemplateFieldRenderer({
             value={value || ""}
             onChange={(e) => handleChange(e.target.value)}
             placeholder={field.placeholder}
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring min-h-[120px]"
+            className={`${inputClassName} min-h-[120px] resize-y`}
           />
         );
 
@@ -53,7 +55,7 @@ export function TemplateFieldRenderer({
             type="datetime-local"
             value={value || ""}
             onChange={(e) => handleChange(e.target.value)}
-            className="w-full"
+            className={inputClassName}
           />
         );
 
@@ -62,7 +64,7 @@ export function TemplateFieldRenderer({
           <select
             value={value || ""}
             onChange={(e) => handleChange(e.target.value)}
-            className="w-full px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring"
+            className={inputClassName}
           >
             <option value="">선택하세요</option>
             {field.options?.map((option: string) => (
@@ -80,13 +82,13 @@ export function TemplateFieldRenderer({
             value={value || ""}
             onChange={(e) => handleChange(e.target.value)}
             placeholder={field.placeholder}
-            className="w-full font-mono"
+            className={`${inputClassName} font-mono`}
           />
         );
 
       case "rich-text":
         return (
-          <div className="border border-border rounded-lg">
+          <div className="bg-muted/30 rounded-lg border border-border/50">
             <TipTapEditor
               placeholder={field.placeholder}
               onUpdate={(editor) => {
@@ -108,7 +110,7 @@ export function TemplateFieldRenderer({
         );
 
       default:
-        return <div className="text-muted-foreground">지원하지 않는 필드 타입입니다.</div>;
+        return <div className="text-muted-foreground text-sm">지원하지 않는 필드 타입입니다.</div>;
     }
   };
 
@@ -119,15 +121,20 @@ export function TemplateFieldRenderer({
 
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">
+      <label className="block text-sm font-semibold mb-2.5">
         {field.label}
         {field.required && <span className="text-destructive ml-1">*</span>}
       </label>
       {field.description && (
-        <p className="text-xs text-muted-foreground mb-2">{field.description}</p>
+        <p className="text-xs text-muted-foreground mb-2.5 leading-relaxed">{field.description}</p>
       )}
       {renderInput()}
-      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
+      {error && (
+        <p className="text-xs text-destructive mt-2 flex items-start gap-1">
+          <span className="text-destructive">⚠</span>
+          <span>{error}</span>
+        </p>
+      )}
     </div>
   );
 }

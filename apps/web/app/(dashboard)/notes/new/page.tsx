@@ -209,9 +209,9 @@ export default function NewNotePage() {
 
   return (
     <div className="container py-6 sm:py-8 max-w-5xl mx-auto">
-      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <h1 className="text-2xl sm:text-3xl font-bold">새 노트 작성</h1>
-        <div className="flex gap-2 w-full sm:w-auto">
+        <div className="flex gap-2.5 w-full sm:w-auto">
           <Button variant="outline" onClick={handleCancel} disabled={isSaving} className="flex-1 sm:flex-none">
             취소
           </Button>
@@ -221,16 +221,16 @@ export default function NewNotePage() {
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5 sm:space-y-6">
         <div>
-          <label htmlFor="template" className="block text-sm font-medium mb-2">
-            템플릿 <span className="text-muted-foreground text-xs">(선택사항)</span>
+          <label htmlFor="template" className="block text-sm font-semibold mb-2.5">
+            템플릿 <span className="text-muted-foreground text-xs font-normal">(선택사항)</span>
           </label>
           <select
             id="template"
             value={selectedTemplateId}
             onChange={(e) => handleTemplateChange(e.target.value)}
-            className="w-full px-3 sm:px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring text-base"
+            className="w-full px-3.5 sm:px-4 py-2.5 border border-border/50 bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary/50 text-base transition-colors"
             disabled={isSaving}
           >
             <option value="">템플릿 없이 자유롭게 작성</option>
@@ -243,7 +243,7 @@ export default function NewNotePage() {
         </div>
 
         <div>
-          <label htmlFor="title" className="block text-sm font-medium mb-2">
+          <label htmlFor="title" className="block text-sm font-semibold mb-2.5">
             제목
           </label>
           <input
@@ -252,17 +252,17 @@ export default function NewNotePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="노트 제목을 입력하세요"
-            className="w-full px-3 sm:px-4 py-2 border border-border bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-ring text-base"
+            className="w-full px-3.5 sm:px-4 py-2.5 border border-border/50 bg-background rounded-lg focus:outline-hidden focus:ring-2 focus:ring-primary/20 focus:border-primary/50 text-base transition-colors"
             disabled={isSaving}
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label className="block text-sm font-semibold mb-2.5">
             {selectedTemplate ? "템플릿 작성" : "내용"}
           </label>
           {selectedTemplate ? (
-            <div className="space-y-4">
+            <div className="space-y-5">
               {(selectedTemplate.fields as TemplateField[]).map((field: TemplateField) => (
                 <TemplateFieldRenderer
                   key={field.id}
@@ -275,24 +275,41 @@ export default function NewNotePage() {
               ))}
             </div>
           ) : (
-            <TipTapEditor
-              placeholder="노트 내용을 입력하세요..."
-              onUpdate={handleEditorUpdate}
-            />
+            <div className="bg-muted/30 rounded-lg border border-border/50">
+              <TipTapEditor
+                placeholder="노트 내용을 입력하세요..."
+                onUpdate={handleEditorUpdate}
+              />
+            </div>
           )}
         </div>
       </div>
 
-      <div className="mt-6 p-4 bg-muted rounded-lg hidden sm:block">
-        <h3 className="text-sm font-semibold mb-2 flex items-center gap-2">
-          <Lightbulb className="w-4 h-4" /> 에디터 단축키
+      <div className="mt-8 p-5 bg-muted/40 border border-border/50 rounded-xl hidden sm:block">
+        <h3 className="text-sm font-semibold mb-3 flex items-center gap-2 text-foreground">
+          <Lightbulb className="w-4 h-4 text-primary" /> 에디터 단축키
         </h3>
-        <ul className="text-sm text-muted-foreground space-y-1">
-          <li><strong>Ctrl+B</strong>: 굵게</li>
-          <li><strong>Ctrl+I</strong>: 기울임</li>
-          <li><strong>Ctrl+U</strong>: 밑줄</li>
-          <li><strong>Ctrl+Z</strong>: 실행 취소</li>
-          <li><strong>Ctrl+Y</strong>: 다시 실행</li>
+        <ul className="text-sm text-muted-foreground space-y-2">
+          <li className="flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-background border border-border rounded text-xs font-mono">Ctrl+B</kbd>
+            <span>굵게</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-background border border-border rounded text-xs font-mono">Ctrl+I</kbd>
+            <span>기울임</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-background border border-border rounded text-xs font-mono">Ctrl+U</kbd>
+            <span>밑줄</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-background border border-border rounded text-xs font-mono">Ctrl+Z</kbd>
+            <span>실행 취소</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-background border border-border rounded text-xs font-mono">Ctrl+Y</kbd>
+            <span>다시 실행</span>
+          </li>
         </ul>
       </div>
     </div>
