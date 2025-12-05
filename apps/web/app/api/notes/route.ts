@@ -88,15 +88,15 @@ export async function POST(request: NextRequest) {
     // 태그 처리
     const tagConnections = tags
       ? await Promise.all(
-          tags.map(async (tagName: string) => {
-            const tag = await prisma.tag.upsert({
-              where: { name: tagName },
-              update: {},
-              create: { name: tagName },
-            });
-            return { id: tag.id };
-          })
-        )
+        tags.map(async (tagName: string) => {
+          const tag = await prisma.tag.upsert({
+            where: { name: tagName },
+            update: {},
+            create: { name: tagName },
+          });
+          return { id: tag.id };
+        })
+      )
       : [];
 
     const note = await prisma.note.create({

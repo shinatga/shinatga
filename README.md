@@ -28,7 +28,6 @@ shinatga/
 - 태그 및 카테고리
 
 ### 풀스택 기능
-- ~~인증 (NextAuth v5)~~ - 현재 비활성화됨
 - 노트 저장/검색
 - 템플릿 관리
 - PostgreSQL 데이터베이스
@@ -40,18 +39,12 @@ shinatga/
 | Framework | Next.js 15+ (App Router) |
 | Monorepo | Turborepo + pnpm |
 | Database | PostgreSQL + Prisma |
-| Auth | ~~NextAuth.js v5~~ (비활성화됨) |
 | Editor | TipTap |
 | Styling | Tailwind CSS |
 | UI | shadcn/ui |
 | Validation | Zod |
 
 ## 시작하기
-
-> **참고**: 현재 NextAuth 인증 기능은 비활성화되어 있습니다. 개발 초기에는 인증 없이 모든 기능에 접근할 수 있습니다. 인증이 필요하면 다음 파일의 주석을 해제하세요:
-> - `apps/web/lib/auth.ts`
-> - `apps/web/middleware.ts`
-> - `apps/web/app/api/auth/[...nextauth]/route.ts`
 
 ### 요구사항
 

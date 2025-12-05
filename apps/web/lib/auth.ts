@@ -36,9 +36,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     ...authConfig.callbacks,
+    async jwt({ token, user }) {
+      // On sign-in, user object is available from the adapter
+      if (user) {
+        token.id = user.id; // Store database user ID in token
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.sub!;
+        // Use the stored database ID instead of token.sub
+        session.user.id = token.id as string;
       }
       return session;
     },
