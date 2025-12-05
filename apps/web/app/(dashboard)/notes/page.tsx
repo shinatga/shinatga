@@ -33,40 +33,40 @@ export default async function NotesPage() {
         </div>
 
         <div className="mt-6 sm:mt-8">
-          <h2 className="text-lg sm:text-xl font-semibold mb-4">{notesLabels.recentNotes}</h2>
+          <h2 className="text-lg sm:text-xl font-semibold mb-5">{notesLabels.recentNotes}</h2>
           {notes.length === 0 ? (
-            <Card>
-              <CardContent className="py-8 sm:py-12 text-center">
-                <p className="text-muted-foreground mb-4">{notesLabels.empty}</p>
+            <Card className="border-dashed">
+              <CardContent className="py-12 sm:py-16 text-center">
+                <p className="text-muted-foreground mb-6 text-base">{notesLabels.empty}</p>
                 <Link href="/notes/new">
-                  <Button>첫 노트 작성하기</Button>
+                  <Button size="lg">첫 노트 작성하기</Button>
                 </Link>
               </CardContent>
             </Card>
           ) : (
-            <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-5 lg:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {notes.map((note) => (
-                <Link key={note.id} href={`/notes/${note.id}`}>
-                  <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full active:scale-[0.98]">
-                    <CardHeader className="p-4 sm:p-6">
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <div className="text-xl sm:text-2xl">
-                          <TemplateIcon iconName={note.template?.icon} className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
+                <Link key={note.id} href={`/notes/${note.id}`} className="group">
+                  <Card className="hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer h-full border-border/50">
+                    <CardHeader className="p-5 sm:p-6">
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-muted/50 flex items-center justify-center group-hover:bg-primary/10 transition-colors duration-300">
+                          <TemplateIcon iconName={note.template?.icon} className="w-6 h-6 sm:w-7 sm:h-7 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                         </div>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs font-medium text-muted-foreground/80 bg-muted/30 px-2.5 py-1 rounded-md">
                           {formatDate(note.createdAt)}
                         </span>
                       </div>
-                      <CardTitle className="line-clamp-1 text-base sm:text-lg">{note.title}</CardTitle>
-                      <CardDescription className="line-clamp-2 text-sm">
+                      <CardTitle className="line-clamp-1 text-base sm:text-lg font-semibold mb-1.5 group-hover:text-primary transition-colors duration-300">{note.title}</CardTitle>
+                      <CardDescription className="line-clamp-2 text-sm leading-relaxed">
                         {note.template?.name || "자유 노트"}
                       </CardDescription>
                       {note.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-2">
+                        <div className="flex flex-wrap gap-1.5 mt-3">
                           {note.tags.map((tag) => (
                             <span
                               key={tag.id}
-                              className="text-xs px-2 py-1 bg-muted rounded-full"
+                              className="text-xs px-2.5 py-1 bg-muted/60 hover:bg-muted rounded-full transition-colors"
                             >
                               {tag.name}
                             </span>
