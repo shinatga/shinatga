@@ -1,6 +1,7 @@
 import { prisma } from "@shinatga/database";
 import type { Note, Template, Tag } from "@shinatga/database";
 import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export interface NoteWithRelations extends Note {
   template: Template | null;
@@ -33,7 +34,7 @@ export async function getNotesServer(
   const session = await auth();
 
   if (!session?.user?.id) {
-    throw new Error("로그인이 필요합니다.");
+    redirect("/login");
   }
 
   const {
