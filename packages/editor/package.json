@@ -9,36 +9,36 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@tiptap/core": "^2.10.3",
-    "@tiptap/extension-bold": "^2.10.3",
-    "@tiptap/extension-bullet-list": "^2.10.3",
-    "@tiptap/extension-document": "^2.10.3",
-    "@tiptap/extension-heading": "^2.10.3",
-    "@tiptap/extension-highlight": "^2.10.3",
-    "@tiptap/extension-italic": "^2.10.3",
-    "@tiptap/extension-link": "^2.10.3",
-    "@tiptap/extension-list-item": "^2.10.3",
-    "@tiptap/extension-ordered-list": "^2.10.3",
-    "@tiptap/extension-paragraph": "^2.10.3",
-    "@tiptap/extension-placeholder": "^2.10.3",
-    "@tiptap/extension-text": "^2.10.3",
-    "@tiptap/extension-underline": "^2.10.3",
-    "@tiptap/pm": "^2.10.3",
-    "@tiptap/react": "^2.10.3",
-    "@tiptap/starter-kit": "^2.10.3",
-    "lucide-react": "^0.553.0"
+    "@tiptap/core": "^3.13.0",
+    "@tiptap/extension-bold": "^3.13.0",
+    "@tiptap/extension-bullet-list": "^3.13.0",
+    "@tiptap/extension-document": "^3.13.0",
+    "@tiptap/extension-heading": "^3.13.0",
+    "@tiptap/extension-highlight": "^3.13.0",
+    "@tiptap/extension-italic": "^3.13.0",
+    "@tiptap/extension-link": "^3.13.0",
+    "@tiptap/extension-list-item": "^3.13.0",
+    "@tiptap/extension-ordered-list": "^3.13.0",
+    "@tiptap/extension-paragraph": "^3.13.0",
+    "@tiptap/extension-placeholder": "^3.13.0",
+    "@tiptap/extension-text": "^3.13.0",
+    "@tiptap/extension-underline": "^3.13.0",
+    "@tiptap/pm": "^3.13.0",
+    "@tiptap/react": "^3.13.0",
+    "@tiptap/starter-kit": "^3.13.0",
+    "lucide-react": "^0.556.0"
   },
   "devDependencies": {
     "@shinatga/eslint-config": "workspace:*",
     "@shinatga/typescript-config": "workspace:*",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^9.15.0",
-    "react": "^18.3.1",
+    "react": "^19.2.1",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
+    "react": "^19.2.1",
     "react-dom": "^18.3.1"
   }
 }
